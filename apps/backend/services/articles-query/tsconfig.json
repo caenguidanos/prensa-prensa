@@ -1,0 +1,16 @@
+{
+   "extends": "../../../../tsconfig.base.json",
+   "compilerOptions": {
+      "baseUrl": ".",
+      "types": ["express", "node"],
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "paths": {
+         "$lib": ["src/lib"],
+         "$lib/*": ["src/lib/*"]
+      }
+   },
+   "files": [],
+   "exclude": ["**/*.spec.ts"],
+   "include": ["**.d.ts", "**/*.ts"]
+}

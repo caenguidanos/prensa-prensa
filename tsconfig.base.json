@@ -1,0 +1,29 @@
+{
+   "compilerOptions": {
+      "target": "es2021",
+      "module": "esnext",
+      "lib": ["es2021", "DOM"],
+      "skipLibCheck": true,
+      "strict": true,
+      "noEmit": true,
+      "importHelpers": true,
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "incremental": true,
+      "importsNotUsedAsValues": "error",
+      "forceConsistentCasingInFileNames": true,
+      "noImplicitAny": false,
+      "strictNullChecks": false,
+      "strictFunctionTypes": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noImplicitReturns": false,
+      "noFallthroughCasesInSwitch": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "allowJs": true,
+      "checkJs": true
+   },
+   "exclude": ["node_modules"]
+}

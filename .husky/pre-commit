@@ -13,7 +13,7 @@ else
 
    pnpm frontend-www:lint
    pnpm frontend-www:test
-   pnpm frontend-www:format
+   pnpm all:format
 
    git add .
 fi
