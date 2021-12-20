@@ -7,5 +7,12 @@
       "report": "playwright show-report coverage/html",
       "format": "prettier --write .",
       "prepare": "playwright install && playwright install-deps"
+   },
+   "devDependencies": {
+      "@playwright/test": "1.17.1",
+      "eslint-plugin-playwright": "0.6.0",
+      "eslint-config-prettier": "8.3.0",
+      "prettier": "2.5.1",
+      "eslint": "8.5.0"
    }
 }
