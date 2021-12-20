@@ -11,6 +11,6 @@ else
    #    exit 1
    # fi
 
-   pnpm www:e2e
+   pnpm www-e2e:start
    pnpm www:build
 fi
