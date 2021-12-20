@@ -1,0 +1,12 @@
+{
+   "name": "backend-gateway",
+   "version": "1.0.0",
+   "scripts": {
+      "dev": "nodemon -e go --exec 'go run . || exit 1' --signal SIGTERM",
+      "start": "GIN_MODE=release ./dist/bin",
+      "build": "go build -o dist/bin -a -v .",
+      "format": "prettier --write . && go fmt ./...",
+      "test": "go test -coverprofile coverage.profile ./...",
+      "test:report": "go tool cover -html=coverage.profile"
+   }
+}

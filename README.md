@@ -1,10 +1,11 @@
 # Prensa! Prensa!
 
-![Diagram](./workspace-diagram.svg)
+![Diagram](./static/workspace-diagram.svg)
 
 ## Requirements
 
 -  node: `16.13.0`
+-  golang: `+1.17`
 -  nvm
 -  pnpm
 
@@ -14,20 +15,44 @@
 pnpm install
 ```
 
-## www
+## frontend-www
 
 ```bash
-pnpm www:lint
-pnpm www:test
-pnpm www:dev
-pnpm www:build
-pnpm www:storybook
+pnpm frontend-www:lint
+pnpm frontend-www:test
+pnpm frontend-www:dev
+pnpm frontend-www:build
+pnpm frontend-www:storybook
 ```
 
-## www-e2e
+## frontend-www-e2e
 
 ```bash
-pnpm www-e2e:lint
-pnpm www-e2e:start
-pnpm www-e2e:report
+pnpm frontend-www-e2e:lint
+pnpm frontend-www-e2e:start
+pnpm frontend-www-e2e:report
+```
+
+## backend-gateway-e2e
+
+```bash
+pnpm backend-gateway-e2e:lint
+pnpm backend-gateway-e2e:start
+pnpm backend-gateway-e2e:report
+```
+
+## backend-services-articles-command-e2e
+
+```bash
+pnpm backend-services-articles-command-e2e:lint
+pnpm backend-services-articles-command-e2e:start
+pnpm backend-services-articles-command-e2e:report
+```
+
+## backend-services-articles-query-e2e
+
+```bash
+pnpm backend-services-articles-query-e2e:lint
+pnpm backend-services-articles-query-e2e:start
+pnpm backend-services-articles-query-e2e:report
 ```
