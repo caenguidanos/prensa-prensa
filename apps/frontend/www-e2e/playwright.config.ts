@@ -13,20 +13,20 @@ export default {
          "html",
          {
             outputFolder: path.join(process.cwd(), "coverage", "html"),
-            open: "never",
-         },
+            open: "never"
+         }
       ],
-      ["list"],
+      ["list"]
    ],
    use: {
       baseURL: process.env.PLAYWRIGHT_BASE_URL || "http://localhost:3000",
-      trace: "retry-with-trace",
+      trace: "retry-with-trace"
    },
    webServer: {
-      command: "pnpm www:dev",
+      command: "cd ../.. && pnpm www:dev",
       port: 3000,
       timeout: 30 * 1000,
-      reuseExistingServer: true,
+      reuseExistingServer: true
    },
    projects: [
       {
@@ -35,8 +35,8 @@ export default {
             trace: "on",
             video: "on",
             screenshot: "on",
-            ...devices["Desktop Chrome"],
-         },
+            ...devices["Desktop Chrome"]
+         }
       },
       {
          name: "Tablet Android",
@@ -44,8 +44,8 @@ export default {
             trace: "on",
             video: "on",
             screenshot: "on",
-            ...devices["Galaxy Tab S4"],
-         },
+            ...devices["Galaxy Tab S4"]
+         }
       },
       {
          name: "Mobile Android",
@@ -53,8 +53,8 @@ export default {
             trace: "on",
             video: "on",
             screenshot: "on",
-            ...devices["Pixel 5"],
-         },
-      },
-   ],
+            ...devices["Pixel 5"]
+         }
+      }
+   ]
 } as PlaywrightTestConfig;
