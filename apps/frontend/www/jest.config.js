@@ -31,8 +31,8 @@ const customJestConfig = {
       }
    },
    moduleNameMapper: {
-      "^\\$msw/server$": "<rootDir>/msw/msw-server.ts",
-      "^\\$msw/data$": "<rootDir>/msw/msw-data.ts",
+      "^\\$msw/server$": "<rootDir>/.msw/msw-server.ts",
+      "^\\$msw/data$": "<rootDir>/.msw/msw-data.ts",
       "^\\$stitches$": "<rootDir>/stitches.config.ts",
       "^\\$lib/(.*)$": "<rootDir>/src/lib/$1"
    }

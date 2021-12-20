@@ -10,6 +10,7 @@ module.exports = {
    typescript: { reactDocgen: false },
    webpackFinal: (config) => {
       config.resolve.plugins = [new TsconfigPathsPlugin()];
+
       return config;
    }
 };

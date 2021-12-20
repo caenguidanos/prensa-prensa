@@ -1,9 +1,7 @@
-import toast from "react-hot-toast";
-import { useCallback, useState } from "react";
-import { BackpackIcon, CheckIcon, Cross2Icon } from "@radix-ui/react-icons";
+import { BackpackIcon, TrashIcon } from "@radix-ui/react-icons";
 import { SpinnerCircularFixed } from "spinners-react";
 
-import { styled, css, config } from "$stitches";
+import { styled, config } from "$stitches";
 
 import type { Article } from "../../entity/domain-articles-entity";
 
@@ -12,30 +10,10 @@ export interface DomainArticlesUiCardProps {
    description: Article["description"];
    author: Article["author"];
    date: Article["date"];
-   onClick: () => Promise<void>;
+   onClick: () => void;
+   loading: boolean;
+   mode: "archive" | "delete";
 }
-
-const ToastSuccess = css({
-   border: "none",
-   padding: "$1",
-   color: "$green700",
-   backgroundColor: "$green100",
-   borderRadius: "$1",
-   fontFamily: "$oswald",
-   fontSize: "$sm",
-   shadow: "sm"
-});
-
-const ToastError = css({
-   border: "none",
-   padding: "$1",
-   color: "$red700",
-   backgroundColor: "$red100",
-   borderRadius: "$1",
-   fontFamily: "$oswald",
-   fontSize: "$sm",
-   shadow: "sm"
-});
 
 const DomainArticlesUiCardContainer = styled("article", {
    position: "relative",
@@ -98,8 +76,6 @@ const DomainArticlesUiCardArchiveButton = styled("button", {
    }
 });
 
-const DomainArticlesUiCardArchiveIcon = styled(BackpackIcon, {});
-
 const DomainArticlesUiCardArchiveButtonSpinner = styled("div", {
    position: "absolute",
    top: "$5",
@@ -111,35 +87,13 @@ export const DomainArticlesUiCard: React.FunctionComponent<DomainArticlesUiCardP
    description,
    author,
    date,
-   onClick
+   onClick,
+   loading,
+   mode
 }) => {
-   const [loading, setLoading] = useState<boolean>(false);
-
    const localeDate = new Intl.DateTimeFormat("es-ES", { dateStyle: "long" }).format(
       new Date(date)
    );
-
-   const handleButtonClick = useCallback(async () => {
-      setLoading(true);
-
-      try {
-         await onClick();
-         toast.success("Successfully archived!", {
-            style: {},
-            className: ToastSuccess(),
-            icon: <CheckIcon />
-         });
-      } catch (error) {
-         console.error(error);
-         toast.error("Imposible to archive!", {
-            style: {},
-            className: ToastError(),
-            icon: <Cross2Icon />
-         });
-      }
-
-      setLoading(false);
-   }, [onClick]);
 
    return (
       <DomainArticlesUiCardContainer>
@@ -161,8 +115,9 @@ export const DomainArticlesUiCard: React.FunctionComponent<DomainArticlesUiCardP
                />
             </DomainArticlesUiCardArchiveButtonSpinner>
          ) : (
-            <DomainArticlesUiCardArchiveButton onClick={handleButtonClick}>
-               <DomainArticlesUiCardArchiveIcon />
+            <DomainArticlesUiCardArchiveButton onClick={onClick}>
+               {mode === "archive" ? <BackpackIcon /> : null}
+               {mode === "delete" ? <TrashIcon /> : null}
             </DomainArticlesUiCardArchiveButton>
          )}
       </DomainArticlesUiCardContainer>

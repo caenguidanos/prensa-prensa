@@ -1,12 +1,14 @@
 import Link from "next/link";
+
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
-import { GitHubLogoIcon, TwitterLogoIcon, GearIcon } from "@radix-ui/react-icons";
+import { GitHubLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 
 import { styled, config, keyframes } from "$stitches";
 
-import { useScroll, useUntilDistinctScroll, hexToRgba } from "../../util";
+import { useAppBar } from "../../state";
+import { useUntilDistinctScroll, hexToRgba } from "../../util";
 
-const ViewComponentsAppBarPrimitive = styled("nav", {
+const DomainSharedUiAppBarPrimitive = styled("nav", {
    position: "sticky",
    top: "$0",
    display: "flex",
@@ -24,14 +26,15 @@ const ViewComponentsAppBarPrimitive = styled("nav", {
    transitionDuration: "350ms"
 });
 
-const ViewComponentsAppBarLinkContainerPrimitive = styled("div", {
+const DomainSharedUiAppBarLinkContainerPrimitive = styled("div", {
    display: "flex",
    alignItems: "center",
    justifyContent: "start",
    gap: "$4"
 });
 
-const ViewComponentsAppBarLinkPrimitive = styled("a", {
+const DomainSharedUiAppBarLinkPrimitive = styled("a", {
+   position: "relative",
    fontFamily: "$serif",
    fontWeight: "$medium",
    fontSize: "$xl",
@@ -45,22 +48,48 @@ const ViewComponentsAppBarLinkPrimitive = styled("a", {
    }
 });
 
-const ViewComponentsAppBarAvatarContainerPrimitive = styled("div", {
+const DomainSharedUiAppBarLinkPrimitiveBadge = styled("span", {
+   position: "absolute",
+   top: 0,
+   right: -17
+});
+
+const DomainSharedUiAppBarLinkPrimitiveBadgeContent = styled("span", {
+   fontFamily: "$mono",
+   fontWeight: "$medium",
+   fontSize: "$2xs",
+   color: "$neutral100",
+   backgroundColor: "$red700",
+   borderRadius: "$full",
+   height: "$2",
+   width: "$2",
+   padding: "$2",
+   display: "flex",
+   justifyContent: "center",
+   alignItems: "center",
+   textAlign: "match-parent"
+});
+
+const DomainSharedUiAppBarAvatarContainerPrimitive = styled("div", {
    display: "flex",
    alignItems: "center",
    justifyContent: "end",
    position: "static"
 });
 
-const ViewComponentsAppBarGearPrimitive = styled(GearIcon, {
+const DomainSharedUiAppBarAvatarPrimitive = styled("img", {
    userSelect: "none",
    width: "$6",
    height: "$6",
-   color: "$neutral700",
    cursor: "pointer",
+   borderRadius: "$full",
+   shadow: "md",
    transitionProperty: "all",
    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-   transitionDuration: "50ms"
+   transitionDuration: "350ms",
+   "&:hover": {
+      shadow: "sm"
+   }
 });
 
 const slideUpAndFade = keyframes({
@@ -131,32 +160,38 @@ const PopoverContentSubtitle = styled("p", {
    fontSize: "$sm"
 });
 
-export const ViewComponentsAppBar: React.FunctionComponent = () => {
-   const [position] = useScroll();
+export const DomainSharedUiAppBar: React.FunctionComponent = () => {
+   const [state] = useAppBar();
+
    const [isScrollPositive] = useUntilDistinctScroll();
 
-   const rotate = `rotate(${position}deg)`;
    const shadow = isScrollPositive ? "sm" : "none";
 
    return (
-      <ViewComponentsAppBarPrimitive data-testid="ViewComponentsAppBar" css={{ shadow }}>
-         <ViewComponentsAppBarLinkContainerPrimitive>
+      <DomainSharedUiAppBarPrimitive data-testid="DomainSharedUiAppBar" css={{ shadow }}>
+         <DomainSharedUiAppBarLinkContainerPrimitive>
             <Link href="/" passHref>
-               <ViewComponentsAppBarLinkPrimitive>News</ViewComponentsAppBarLinkPrimitive>
+               <DomainSharedUiAppBarLinkPrimitive>News</DomainSharedUiAppBarLinkPrimitive>
             </Link>
 
             <Link href="/archive" passHref>
-               <ViewComponentsAppBarLinkPrimitive>Archive</ViewComponentsAppBarLinkPrimitive>
+               <DomainSharedUiAppBarLinkPrimitive>
+                  Archive{" "}
+                  {state.count ? (
+                     <DomainSharedUiAppBarLinkPrimitiveBadge>
+                        <DomainSharedUiAppBarLinkPrimitiveBadgeContent>
+                           {state.count}
+                        </DomainSharedUiAppBarLinkPrimitiveBadgeContent>
+                     </DomainSharedUiAppBarLinkPrimitiveBadge>
+                  ) : null}
+               </DomainSharedUiAppBarLinkPrimitive>
             </Link>
-         </ViewComponentsAppBarLinkContainerPrimitive>
+         </DomainSharedUiAppBarLinkContainerPrimitive>
 
-         <ViewComponentsAppBarAvatarContainerPrimitive>
+         <DomainSharedUiAppBarAvatarContainerPrimitive>
             <DropdownMenuPrimitive.Root>
                <DropdownMenuPrimitive.Trigger asChild>
-                  <ViewComponentsAppBarGearPrimitive
-                     aria-label="Ver perfil"
-                     style={{ transform: rotate }}
-                  />
+                  <DomainSharedUiAppBarAvatarPrimitive src="/img/avatar.svg" />
                </DropdownMenuPrimitive.Trigger>
 
                <PopoverContent sideOffset={0} alignOffset={7}>
@@ -186,7 +221,7 @@ export const ViewComponentsAppBar: React.FunctionComponent = () => {
                   <PopoverArrow />
                </PopoverContent>
             </DropdownMenuPrimitive.Root>
-         </ViewComponentsAppBarAvatarContainerPrimitive>
-      </ViewComponentsAppBarPrimitive>
+         </DomainSharedUiAppBarAvatarContainerPrimitive>
+      </DomainSharedUiAppBarPrimitive>
    );
 };

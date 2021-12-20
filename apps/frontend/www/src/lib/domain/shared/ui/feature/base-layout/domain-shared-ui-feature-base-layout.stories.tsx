@@ -1,17 +1,17 @@
-import { ViewComponentsBaseLayout } from "./domain-shared-ui-feature-base-layout";
+import { DomainSharedUiBaseLayout } from "./domain-shared-ui-feature-base-layout";
 
 import type { Story, Meta } from "@storybook/react";
 
 export default {
-   component: ViewComponentsBaseLayout,
-   title: "UI/Layout",
+   component: DomainSharedUiBaseLayout,
+   title: "Domain/Shared/UI/Layout",
    parameters: {
       layout: "fullscreen"
    }
 } as Meta;
 
 const Template: Story = () => (
-   <ViewComponentsBaseLayout>
+   <DomainSharedUiBaseLayout>
       <div
          style={{
             display: "grid",
@@ -24,7 +24,7 @@ const Template: Story = () => (
             <p key={`id${i}`}> </p>
          ))}
       </div>
-   </ViewComponentsBaseLayout>
+   </DomainSharedUiBaseLayout>
 );
 
 export const Default = Template.bind({});

@@ -12,19 +12,23 @@ import type {
 describe("domainArticles dataAccess", () => {
    let id: string | undefined;
 
+   const abortController = new AbortController();
+
    it("should query articles", async () => {
       try {
-         const data: QueryArticlesDTO[] = await articlesRepository.queryArticles();
+         const data: QueryArticlesDTO[] = await articlesRepository.queryArticles(
+            abortController.signal
+         );
 
          expect(data).toBeTruthy();
-         expect(data.length).toBe(30);
+         expect(data.length).toBe(5);
 
          for (const d of data) {
             expect(d._id).toBeTruthy();
             expect(d.archiveDate).toBeNull();
          }
 
-         id = data[15]._id;
+         id = data[2]._id;
       } catch (error) {
          throw error;
       }
@@ -36,7 +40,10 @@ describe("domainArticles dataAccess", () => {
       }
 
       try {
-         const data: QueryArticlesDTO = await articlesRepository.queryArticleByID(id);
+         const data: QueryArticlesDTO = await articlesRepository.queryArticleByID(
+            id,
+            abortController.signal
+         );
 
          expect(data).toBeTruthy();
 
@@ -48,7 +55,7 @@ describe("domainArticles dataAccess", () => {
 
    it("should not query articles by invalid id", async () => {
       try {
-         await articlesRepository.queryArticleByID("1234");
+         await articlesRepository.queryArticleByID("1234", abortController.signal);
       } catch (error) {
          expect((error as Error).message).toBe(`${HttpStatus.NOT_FOUND}`);
       }
@@ -63,7 +70,10 @@ describe("domainArticles dataAccess", () => {
       };
 
       try {
-         const data = await articlesRepository.commandCreateArticle(payload);
+         const data = await articlesRepository.commandCreateArticle(
+            payload,
+            abortController.signal
+         );
 
          expect(data).toBeTruthy();
 
@@ -90,7 +100,11 @@ describe("domainArticles dataAccess", () => {
       }
 
       try {
-         const data = await articlesRepository.commandUpdateArticleByID(id, payload);
+         const data = await articlesRepository.commandUpdateArticleByID(
+            id,
+            payload,
+            abortController.signal
+         );
 
          expect(data).toBeTruthy();
 
@@ -113,7 +127,7 @@ describe("domainArticles dataAccess", () => {
       };
 
       try {
-         await articlesRepository.commandUpdateArticleByID("1234", payload);
+         await articlesRepository.commandUpdateArticleByID("1234", payload, abortController.signal);
       } catch (error) {
          expect((error as Error).message).toBe(`${HttpStatus.NOT_FOUND}`);
       }
@@ -125,11 +139,14 @@ describe("domainArticles dataAccess", () => {
       }
 
       try {
-         const commandDelete = await articlesRepository.commandDeleteArticleByID(id);
+         const commandDelete = await articlesRepository.commandDeleteArticleByID(
+            id,
+            abortController.signal
+         );
 
          expect(commandDelete).toBeTruthy();
 
-         await articlesRepository.queryArticleByID(id);
+         await articlesRepository.queryArticleByID(id, abortController.signal);
       } catch (error) {
          expect((error as Error).message).toBe(`${HttpStatus.NOT_FOUND}`);
       }

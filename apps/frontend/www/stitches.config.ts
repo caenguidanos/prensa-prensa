@@ -427,6 +427,8 @@ const stitches = createStitches({
          "9xl": "1rem"
       },
       fontSizes: {
+         "3xs": "0.35rem",
+         "2xs": "0.50rem",
          xs: "0.75rem",
          sm: "0.875rem",
          base: "1rem",

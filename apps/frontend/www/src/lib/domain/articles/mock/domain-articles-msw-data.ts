@@ -15,7 +15,7 @@ export const db = factory({
 });
 
 export function createCollection(): void {
-   for (let i = 0; i < 30; i++) {
+   for (let i = 0; i < 5; i++) {
       db.articles.create({ archiveDate: null });
    }
 }

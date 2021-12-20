@@ -1,5 +1,6 @@
-const Page = () => {
-   return <div>Hello</div>;
-};
+import { ViewPagesArchive } from "$lib/view/pages/archive";
+import { DomainSharedUiBaseLayout } from "$lib/domain/shared/ui";
 
-export default Page;
+ViewPagesArchive.layout = DomainSharedUiBaseLayout;
+
+export default ViewPagesArchive;

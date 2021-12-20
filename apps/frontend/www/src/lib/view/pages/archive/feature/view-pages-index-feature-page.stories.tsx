@@ -2,23 +2,23 @@ import { Toaster } from "react-hot-toast";
 
 import { DomainSharedUiBaseLayout } from "$lib/domain/shared/ui";
 
-import { ViewPagesIndex } from "./view-pages-index-feature-page";
+import { ViewPagesArchive } from "./view-pages-index-feature-page";
 
 import type { Story, Meta } from "@storybook/react";
-import type { ViewPagesIndexProps } from "../entity/view-pages-index-feature-page.entity";
+import type { ViewPagesArchiveProps } from "../entity/view-pages-archive-feature-page.entity";
 
 export default {
-   component: ViewPagesIndex,
-   title: "View/Pages/Index",
+   component: ViewPagesArchive,
+   title: "View/Pages/Archive",
    parameters: {
       layout: "fullscreen"
    }
 } as Meta;
 
-const Template: Story<ViewPagesIndexProps> = (args) => (
+const Template: Story<ViewPagesArchiveProps> = (args) => (
    <>
       <DomainSharedUiBaseLayout>
-         <ViewPagesIndex {...args} />
+         <ViewPagesArchive {...args} />
       </DomainSharedUiBaseLayout>
       <Toaster position="bottom-right" />
    </>

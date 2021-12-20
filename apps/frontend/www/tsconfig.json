@@ -30,10 +30,10 @@
       "paths": {
          "$lib": ["src/lib"],
          "$lib/*": ["src/lib/*"],
-         "$msw/inject": ["msw/msw-inject.ts"],
-         "$msw/browser": ["msw/msw-browser.ts"],
-         "$msw/server": ["msw/msw-server.ts"],
-         "$msw/data": ["msw/msw-data.ts"],
+         "$msw/inject": [".msw/msw-inject.ts"],
+         "$msw/browser": [".msw/msw-browser.ts"],
+         "$msw/server": [".msw/msw-server.ts"],
+         "$msw/data": [".msw/msw-data.ts"],
          "$styles/globals": ["src/lib/domain/shared/styles/globals.scss"],
          "$stitches": ["stitches.config.ts"]
       }

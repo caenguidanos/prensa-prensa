@@ -2,7 +2,6 @@ import { styled } from "$stitches";
 
 const ViewPagesIndexPrincipalContainer = styled("div", {
    display: "grid",
-   borderBottom: "1px solid $neutral800",
    paddingBottom: "$10",
    "@lg": {
       gridCols: 4
@@ -15,7 +14,10 @@ const ViewPagesIndexPrincipalImg = styled("img", {
    aspectRatio: "16 / 9",
    width: "$108",
    height: "$64",
-   margin: "$5"
+   margin: "0 0 $5 0",
+   "@sm": {
+      margin: "$5"
+   }
 });
 
 const ViewPagesIndexPrincipalFirstColumn = styled("p", {
@@ -62,10 +64,7 @@ export const ViewPagesIndexUiPrincipal: React.FunctionComponent = () => {
    return (
       <ViewPagesIndexPrincipalContainer>
          <ViewPagesIndexPrincipalFirstColumn>
-            <ViewPagesIndexPrincipalImg
-               src="http://www.quehacerenvalencia.es/wp-content/uploads/dia-mundial-guia-de-turismo-en-Valencia.jpg"
-               alt="valencia"
-            />
+            <ViewPagesIndexPrincipalImg src="/img/valencia.jpeg" alt="valencia" />
 
             {
                "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum, impedit quidem nemo magnam saepe quis reiciendis corporis recusandae iste ducimus architecto iure libero minus, exercitationem repellat numquam fuga quibusdam eveniet."

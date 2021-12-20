@@ -1,19 +1,20 @@
 import { styled } from "$stitches";
 
-import { ViewComponentsAppBar } from "../app-bar/domain-shared-ui-feature-app-bar";
+import { DomainSharedUiAppBar } from "../app-bar/domain-shared-ui-feature-app-bar";
 
-const ViewComponentsBaseLayoutPrimitive = styled("div", {
+const DomainSharedUiBaseLayoutPrimitive = styled("div", {
    height: "100%",
    minHeight: "100vh",
    width: "100%",
-   maxWidth: "100wh",
+   minWidth: "100%",
    backgroundColor: "$amber100"
 });
 
-const ViewComponentsBaseLayoutContentPrimitive = styled("main", {
+const DomainSharedUiBaseLayoutContentPrimitive = styled("main", {
    display: "flex",
    justifyContent: "center",
    alignItems: "start",
+   maxWidth: "100rem",
    padding: "$2",
    "@sm": {
       py: "$8",
@@ -41,14 +42,14 @@ const ViewComponentsBaseLayoutContentPrimitive = styled("main", {
    }
 });
 
-export const ViewComponentsBaseLayout: React.FunctionComponent = ({ children }) => {
+export const DomainSharedUiBaseLayout: React.FunctionComponent = ({ children }) => {
    return (
-      <ViewComponentsBaseLayoutPrimitive data-testid="ViewComponentsBaseLayout">
-         <ViewComponentsAppBar />
+      <DomainSharedUiBaseLayoutPrimitive data-testid="DomainSharedUiBaseLayout">
+         <DomainSharedUiAppBar />
 
-         <ViewComponentsBaseLayoutContentPrimitive data-testid="ViewComponentsBaseLayoutContent">
+         <DomainSharedUiBaseLayoutContentPrimitive data-testid="DomainSharedUiBaseLayoutContent">
             {children}
-         </ViewComponentsBaseLayoutContentPrimitive>
-      </ViewComponentsBaseLayoutPrimitive>
+         </DomainSharedUiBaseLayoutContentPrimitive>
+      </DomainSharedUiBaseLayoutPrimitive>
    );
 };

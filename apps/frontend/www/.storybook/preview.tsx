@@ -1,7 +1,7 @@
 import * as NextImage from "next/image";
 
-import { worker } from "../msw/msw-browser";
-import { createDb } from "../msw/msw-data";
+import { worker } from "../.msw/msw-browser";
+import { createDb } from "../.msw/msw-data";
 
 import "../src/lib/domain/shared/styles/globals.scss";
 

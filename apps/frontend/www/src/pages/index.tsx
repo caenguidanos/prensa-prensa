@@ -1,6 +1,6 @@
 import { ViewPagesIndex } from "$lib/view/pages/index";
-import { ViewComponentsBaseLayout } from "$lib/domain/shared/ui";
+import { DomainSharedUiBaseLayout } from "$lib/domain/shared/ui";
 
-ViewPagesIndex.layout = ViewComponentsBaseLayout;
+ViewPagesIndex.layout = DomainSharedUiBaseLayout;
 
 export default ViewPagesIndex;

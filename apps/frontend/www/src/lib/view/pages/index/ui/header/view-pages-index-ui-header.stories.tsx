@@ -4,7 +4,7 @@ import type { Story, Meta } from "@storybook/react";
 
 export default {
    component: ViewPagesIndexUiHeader,
-   title: "Pages/Index/UI/Header"
+   title: "View/Pages/Index/UI/Header"
 } as Meta;
 
 const Template: Story = () => <ViewPagesIndexUiHeader />;

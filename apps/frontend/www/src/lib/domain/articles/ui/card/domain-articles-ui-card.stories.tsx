@@ -8,7 +8,7 @@ import type { DomainArticlesUiCardProps } from "./domain-articles-ui-card";
 
 export default {
    component: DomainArticlesUiCard,
-   title: "Articles/UI/Card"
+   title: "Domain/Articles/UI/Card"
 } as Meta;
 
 const Template: Story<DomainArticlesUiCardProps> = (args) => (
@@ -19,42 +19,41 @@ const Template: Story<DomainArticlesUiCardProps> = (args) => (
    </div>
 );
 
-export const Success = Template.bind({});
-
-Success.args = {
+export const Default = Template.bind({});
+Default.args = {
    title: faker.name.title(),
    description: faker.commerce.productDescription(),
    author: faker.name.firstName(),
    date: new Date(),
-   onClick: async () => {
-      const sleep = () =>
-         new Promise<void>((res) => {
-            setTimeout(() => {
-               res();
-            }, 1000);
-         });
-
-      await sleep();
+   loading: false,
+   mode: "archive",
+   onClick: () => {
       console.log("Archived!!");
    }
 };
 
-export const Error = Template.bind({});
-Error.args = {
+export const Loading = Template.bind({});
+Loading.args = {
    title: faker.name.title(),
    description: faker.commerce.productDescription(),
    author: faker.name.firstName(),
    date: new Date(),
-   onClick: async () => {
-      const sleep = () =>
-         new Promise<void>((res) => {
-            setTimeout(() => {
-               res();
-            }, 1000);
-         });
+   loading: true,
+   mode: "archive",
+   onClick: () => {
+      console.log("Archived!!");
+   }
+};
 
-      await sleep();
-
-      throw "Ups";
+export const Archived = Template.bind({});
+Archived.args = {
+   title: faker.name.title(),
+   description: faker.commerce.productDescription(),
+   author: faker.name.firstName(),
+   date: new Date(),
+   loading: false,
+   mode: "delete",
+   onClick: () => {
+      console.log("Deleted!!");
    }
 };

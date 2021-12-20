@@ -8,7 +8,7 @@ import type { QueryArticlesDTO } from "../entity/domain-articles-entity";
 const url = (p: string) => `http://localhost:3000${p}`;
 
 export const handlers = [
-   rest.get(url("/articles"), (_req, res, ctx) => {
+   rest.get(url("/articles"), (req, res, ctx) => {
       const payload: QueryArticlesDTO[] = [];
 
       for (const dbArticle of db.articles.getAll()) {
@@ -23,7 +23,15 @@ export const handlers = [
          });
       }
 
-      return res(ctx.json(payload));
+      const queryParamNew = req.url.searchParams.get("new");
+
+      if (!queryParamNew) {
+         return res(ctx.json(payload));
+      }
+
+      return queryParamNew === "true"
+         ? res(ctx.json(payload.filter((k) => !k.archiveDate)))
+         : res(ctx.json(payload.filter((k) => !!k.archiveDate)));
    }),
    rest.get(url("/articles/:id"), (req, res, ctx) => {
       const selectedArticle = db.articles.findFirst({
