@@ -1,0 +1,10 @@
+{
+   "extends": [
+      "next/core-web-vitals",
+      "plugin:storybook/recommended",
+      "plugin:playwright/playwright-test",
+      "plugin:testing-library/react",
+      "plugin:jest-dom/recommended",
+      "prettier"
+   ]
+}

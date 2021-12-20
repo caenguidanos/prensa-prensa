@@ -1,0 +1,4 @@
+.gitignore
+public/mockServiceWorker.js
+/coverage
+/.next

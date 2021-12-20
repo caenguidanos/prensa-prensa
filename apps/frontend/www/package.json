@@ -1,0 +1,22 @@
+{
+   "name": "www",
+   "version": "1.0.0",
+   "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start",
+      "lint": "next lint",
+      "test": "NODE_OPTIONS=--experimental-vm-modules jest --no-cache",
+      "test:watch": "pnpm test -- --watch",
+      "format": "prettier --write .",
+      "storybook": "start-storybook -p 6006 -s public",
+      "storybook:build": "build-storybook -s public",
+      "prepare": "msw init public"
+   },
+   "resolutions": {
+      "preact": "10.6.2"
+   },
+   "msw": {
+      "workerDirectory": "public"
+   }
+}

@@ -1,0 +1,11 @@
+{
+   "name": "www-e2e",
+   "version": "1.0.0",
+   "scripts": {
+      "lint": "eslint .",
+      "start": "playwright test",
+      "report": "playwright show-report coverage/html",
+      "format": "prettier --write .",
+      "prepare": "playwright install && playright install-deps"
+   }
+}

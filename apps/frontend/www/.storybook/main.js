@@ -1,0 +1,15 @@
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+
+module.exports = {
+   stories: ["../src/lib/**/*.stories.@(js|jsx|ts|tsx|mdx)"],
+   addons: ["@storybook/preset-scss", "@storybook/addon-links", "@storybook/addon-essentials"],
+   framework: "@storybook/react",
+   core: {
+      builder: "webpack5"
+   },
+   typescript: { reactDocgen: false },
+   webpackFinal: (config) => {
+      config.resolve.plugins = [new TsconfigPathsPlugin()];
+      return config;
+   }
+};
