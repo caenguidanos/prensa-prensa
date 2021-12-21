@@ -1,11 +1,13 @@
-import express from "express";
+import url from "url";
+import process from "process";
 
-const app = express();
+import { start } from "./app/server.js";
 
-app.get("*", (req, res) => {
-   return res.json({ message: "al2i" });
-});
+if (process.argv[1] === url.fileURLToPath(import.meta.url)) {
+   if (process.env.NODE_ENV !== "production") {
+      const { config } = await import("dotenv");
+      config();
+   }
 
-app.listen(3000, () => {
-   console.log("Listening 3000");
-});
+   start();
+}

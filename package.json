@@ -51,7 +51,7 @@
       "backend-services-articles-query-e2e:report": "pnpm report --filter backend-services-articles-query-e2e",
       "backend-services-articles-query-e2e:format": "pnpm format --filter backend-services-articles-query-e2e",
       "all:format": "pnpm format -r --filter ./",
-      "clean": "rimraf **/node_modules/**"
+      "clean": "rimraf **/node_modules/** **/dist/** **/.next/** **/coverage/**"
    },
    "devDependencies": {
       "husky": "7.0.4",

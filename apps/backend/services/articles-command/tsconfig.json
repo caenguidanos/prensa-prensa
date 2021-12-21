@@ -4,11 +4,7 @@
       "baseUrl": ".",
       "types": ["express", "node"],
       "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true,
-      "paths": {
-         "$lib": ["src/lib"],
-         "$lib/*": ["src/lib/*"]
-      }
+      "allowSyntheticDefaultImports": true
    },
    "files": [],
    "exclude": ["**/*.spec.ts"],
