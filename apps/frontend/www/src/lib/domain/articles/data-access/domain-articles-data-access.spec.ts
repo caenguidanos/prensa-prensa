@@ -4,9 +4,9 @@ import { HttpStatus } from "@nestjs/common/enums";
 import * as articlesRepository from "./domain-articles-data-access";
 
 import type {
-   QueryArticlesDTO,
-   CommandCreateArticlePayload,
-   CommandUpdateArticlePayload
+   ArticleCommandCreatePayload,
+   ArticleCommandUpdatePayload,
+   ArticleQueryDTO
 } from "../entity/domain-articles-entity";
 
 describe("domainArticles dataAccess", () => {
@@ -16,7 +16,7 @@ describe("domainArticles dataAccess", () => {
 
    it("should query articles", async () => {
       try {
-         const data: QueryArticlesDTO[] = await articlesRepository.queryArticles(
+         const data: ArticleQueryDTO[] = await articlesRepository.queryArticles(
             abortController.signal
          );
 
@@ -40,7 +40,7 @@ describe("domainArticles dataAccess", () => {
       }
 
       try {
-         const data: QueryArticlesDTO = await articlesRepository.queryArticleByID(
+         const data: ArticleQueryDTO = await articlesRepository.queryArticleByID(
             id,
             abortController.signal
          );
@@ -62,7 +62,7 @@ describe("domainArticles dataAccess", () => {
    });
 
    it("should command create article", async () => {
-      const payload: CommandCreateArticlePayload = {
+      const payload: ArticleCommandCreatePayload = {
          title: faker.commerce.productName(),
          description: faker.commerce.productDescription(),
          content: faker.name.jobDescriptor(),
@@ -91,7 +91,7 @@ describe("domainArticles dataAccess", () => {
    });
 
    it("should command update article", async () => {
-      const payload: CommandUpdateArticlePayload = {
+      const payload: ArticleCommandUpdatePayload = {
          description: faker.commerce.productDescription()
       };
 
@@ -122,7 +122,7 @@ describe("domainArticles dataAccess", () => {
    });
 
    it("should not command update article with invalid id", async () => {
-      const payload: CommandUpdateArticlePayload = {
+      const payload: ArticleCommandUpdatePayload = {
          description: faker.commerce.productDescription()
       };
 

@@ -1,12 +1,14 @@
-import express from "express";
+import express, { Express } from "express";
 import helmet from "helmet";
 import cors from "cors";
 import compression from "compression";
 import morgan from "morgan";
 
-import v1AppController from "./v1/app-v1.controller.js";
+import controller from "./app-controller.js";
 
-export function start() {
+import * as mongodbConfig from "./config/mongo-db.config.js";
+
+export async function createApp(): Promise<Express> {
    try {
       const server = express();
 
@@ -15,13 +17,11 @@ export function start() {
       server.use(compression());
       server.use(morgan("tiny"));
 
-      server.use("/v1", v1AppController);
+      server.use("/v1", controller);
 
-      const PORT = process.env.PORT || 3000;
+      await mongodbConfig.connectClient();
 
-      return server.listen(PORT, () => {
-         console.log(`Listening :${PORT}`);
-      });
+      return server;
    } catch (error) {
       console.error(error);
       process.exit(1);

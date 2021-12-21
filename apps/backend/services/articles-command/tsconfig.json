@@ -2,7 +2,7 @@
    "extends": "../../../../tsconfig.base.json",
    "compilerOptions": {
       "baseUrl": ".",
-      "types": ["express", "node"],
+      "types": ["express", "node", "jest"],
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true
    },

@@ -10,7 +10,7 @@ import {
    queryArticlesOnlyNew
 } from "../../data-access/domain-articles-data-access";
 
-import type { QueryArticlesDTO } from "../../entity/domain-articles-entity";
+import type { ArticleQueryDTO } from "../../entity/domain-articles-entity";
 
 const ToastSuccess = css({
    border: "none",
@@ -38,7 +38,7 @@ export function useNewArticles() {
    const [, appBarStateActions] = useAppBar();
 
    const [loading, setLoading] = useState<boolean>(false);
-   const [data, setData] = useState<QueryArticlesDTO[]>([]);
+   const [data, setData] = useState<ArticleQueryDTO[]>([]);
 
    const queryRefreshArticles = useCallback(async () => {
       const abortController = new AbortController();

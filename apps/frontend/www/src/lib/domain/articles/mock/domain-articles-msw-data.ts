@@ -1,6 +1,8 @@
 import faker from "faker";
 import { factory, primaryKey, nullable } from "@mswjs/data";
 
+import type { Article } from "../entity/domain-articles-entity";
+
 export const db = factory({
    articles: {
       _id: primaryKey(faker.datatype.uuid),

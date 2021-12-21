@@ -1,0 +1,12 @@
+{
+   "extends": "../../../../tsconfig.base.json",
+   "compilerOptions": {
+      "baseUrl": ".",
+      "types": ["node"],
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true
+   },
+   "files": [],
+   "exclude": ["**/*.spec.ts"],
+   "include": ["**.d.ts", "**/*.ts"]
+}

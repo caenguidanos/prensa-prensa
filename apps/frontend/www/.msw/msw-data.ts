@@ -1,7 +1,7 @@
-import { createCollection as createArticlesCollection } from "$lib/domain/articles/mock/domain-articles-msw-data";
+import { createCollection } from "$lib/domain/articles/mock/domain-articles-msw-data";
 
 function createDb(): void {
-   createArticlesCollection();
+   createCollection();
 }
 
 export { createDb };

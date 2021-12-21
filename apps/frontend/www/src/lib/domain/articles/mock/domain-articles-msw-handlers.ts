@@ -3,13 +3,13 @@ import { rest } from "msw";
 
 import { db } from "./domain-articles-msw-data";
 
-import type { QueryArticlesDTO } from "../entity/domain-articles-entity";
+import type { ArticleQueryDTO } from "../entity/domain-articles-entity";
 
 const url = (p: string) => `http://localhost:3000${p}`;
 
 export const handlers = [
    rest.get(url("/articles"), (req, res, ctx) => {
-      const payload: QueryArticlesDTO[] = [];
+      const payload: ArticleQueryDTO[] = [];
 
       for (const dbArticle of db.articles.getAll()) {
          payload.push({
@@ -46,7 +46,7 @@ export const handlers = [
          return res(ctx.status(HttpStatus.NOT_FOUND, "Not Found"));
       }
 
-      const payload: QueryArticlesDTO = {
+      const payload: ArticleQueryDTO = {
          _id: selectedArticle._id,
          title: selectedArticle.title,
          description: selectedArticle.description,
@@ -72,7 +72,7 @@ export const handlers = [
          archiveDate: null
       });
 
-      const payload: QueryArticlesDTO = {
+      const payload: ArticleQueryDTO = {
          _id: createdDoc._id,
          title: createdDoc.title,
          description: createdDoc.description,
@@ -108,7 +108,7 @@ export const handlers = [
          return res(ctx.status(HttpStatus.NOT_FOUND, "Not Found"));
       }
 
-      const payload: QueryArticlesDTO = {
+      const payload: ArticleQueryDTO = {
          _id: updatedDoc._id,
          title: updatedDoc.title,
          description: updatedDoc.description,
@@ -137,7 +137,7 @@ export const handlers = [
          return res(ctx.status(HttpStatus.NOT_FOUND, "Not Found"));
       }
 
-      const payload: QueryArticlesDTO = {
+      const payload: ArticleQueryDTO = {
          _id: deletedDoc._id,
          title: deletedDoc.title,
          description: deletedDoc.description,

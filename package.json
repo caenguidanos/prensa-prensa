@@ -2,7 +2,8 @@
    "name": "prensa-prensa",
    "version": "1.0.0",
    "engines": {
-      "node": "16.13.0"
+      "node": "16.13.0",
+      "pnpm": "6.24.2"
    },
    "scripts": {
       "prepare": "husky install",
@@ -32,8 +33,6 @@
       "backend-services-articles-command:build": "pnpm build --filter backend-services-articles-command",
       "backend-services-articles-command:start": "pnpm start --filter backend-services-articles-command",
       "backend-services-articles-command:lint": "pnpm lint --filter backend-services-articles-command",
-      "backend-services-articles-command:test": "pnpm test --filter backend-services-articles-command",
-      "backend-services-articles-command:test:watch": "pnpm test:watch --filter backend-services-articles-command",
       "backend-services-articles-command:format": "pnpm format --filter backend-services-articles-command",
       "backend-services-articles-command-e2e:lint": "pnpm lint --filter backend-services-articles-command-e2e",
       "backend-services-articles-command-e2e:e2e": "pnpm e2e --filter backend-services-articles-command-e2e",
@@ -43,8 +42,6 @@
       "backend-services-articles-query:build": "pnpm build --filter backend-services-articles-query",
       "backend-services-articles-query:start": "pnpm start --filter backend-services-articles-query",
       "backend-services-articles-query:lint": "pnpm lint --filter backend-services-articles-query",
-      "backend-services-articles-query:test": "pnpm test --filter backend-services-articles-query",
-      "backend-services-articles-query:test:watch": "pnpm test:watch --filter backend-services-articles-query",
       "backend-services-articles-query:format": "pnpm format --filter backend-services-articles-query",
       "backend-services-articles-query-e2e:lint": "pnpm lint --filter backend-services-articles-query-e2e",
       "backend-services-articles-query-e2e:e2e": "pnpm e2e --filter backend-services-articles-query-e2e",

@@ -23,10 +23,13 @@ export default {
       trace: "retry-with-trace"
    },
    webServer: {
-      command: "cd ../.. && pnpm www:dev",
+      command: "pnpm dev --filter backend-services-articles-query",
       port: 3000,
       timeout: 30 * 1000,
-      reuseExistingServer: true
+      reuseExistingServer: true,
+      env: {
+         PORT: 3000 as unknown
+      }
    },
    projects: [
       {
@@ -36,24 +39,6 @@ export default {
             video: "on",
             screenshot: "on",
             ...devices["Desktop Chrome"]
-         }
-      },
-      {
-         name: "Tablet Android",
-         use: {
-            trace: "on",
-            video: "on",
-            screenshot: "on",
-            ...devices["Galaxy Tab S4"]
-         }
-      },
-      {
-         name: "Mobile Android",
-         use: {
-            trace: "on",
-            video: "on",
-            screenshot: "on",
-            ...devices["Pixel 5"]
          }
       }
    ]

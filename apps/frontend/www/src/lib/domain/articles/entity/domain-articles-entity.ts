@@ -7,15 +7,15 @@ export interface Article {
    archiveDate: Date | string | null;
 }
 
-export interface ArticleSchema extends Article {
+export interface ArticleSchema extends Omit<Article, "date"> {
    _id: string;
-   created_at: string;
-   updated_at: string;
+   createdAt: string;
+   updatedAt: string;
 }
 
-export interface QueryArticlesDTO extends Article {
+export interface ArticleQueryDTO extends Article {
    _id: string;
 }
 
-export type CommandCreateArticlePayload = Omit<Article, "date" | "archiveDate">;
-export type CommandUpdateArticlePayload = Partial<Omit<Article, "date">>;
+export type ArticleCommandCreatePayload = Omit<Article, "date" | "archiveDate">;
+export type ArticleCommandUpdatePayload = Partial<Omit<Article, "date">>;

@@ -5,7 +5,6 @@
       "lib": ["es2021", "DOM"],
       "skipLibCheck": true,
       "strict": true,
-      "noEmit": true,
       "importHelpers": true,
       "moduleResolution": "node",
       "resolveJsonModule": true,

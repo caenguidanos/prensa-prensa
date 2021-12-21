@@ -3,13 +3,13 @@ import { SpinnerCircularFixed } from "spinners-react";
 
 import { styled, config } from "$stitches";
 
-import type { Article } from "../../entity/domain-articles-entity";
+import type { Article } from "articles";
 
 export interface DomainArticlesUiCardProps {
-   title: Article["title"];
-   description: Article["description"];
-   author: Article["author"];
-   date: Article["date"];
+   title: Article.Model["title"];
+   description: Article.Model["description"];
+   author: Article.Model["author"];
+   date: Article.Model["date"];
    onClick: () => void;
    loading: boolean;
    mode: "archive" | "delete";
