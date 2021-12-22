@@ -18,7 +18,7 @@ export async function createApp(): Promise<Express> {
       server.use(compression());
       server.use(morgan("tiny"));
 
-      server.use("/v1", methods(["GET"]), backendSign("services-articles-command"), controller);
+      server.use("/v1", methods(["GET"]), backendSign("services-articles-query"), controller);
 
       await mongodbConfig.connectClient();
 

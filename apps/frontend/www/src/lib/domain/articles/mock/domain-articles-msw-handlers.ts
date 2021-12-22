@@ -3,7 +3,7 @@ import { rest } from "msw";
 
 import { db } from "./domain-articles-msw-data";
 
-import type { ArticleQueryDTO } from "../entity/domain-articles-entity";
+import type { ArticleQueryDTO } from "@workspace/domain-articles";
 
 const url = (p: string) => `http://localhost:3000/articles${p}`;
 
@@ -18,8 +18,8 @@ export const handlers = [
             description: dbArticle.description,
             content: dbArticle.content,
             author: dbArticle.author,
-            date: dbArticle.created_at,
-            archiveDate: dbArticle.archiveDate as unknown as Date
+            date: dbArticle.created_at.toString(),
+            archiveDate: dbArticle.archiveDate
          });
       }
 
@@ -35,8 +35,8 @@ export const handlers = [
             description: dbArticle.description,
             content: dbArticle.content,
             author: dbArticle.author,
-            date: dbArticle.created_at,
-            archiveDate: dbArticle.archiveDate as unknown as Date
+            date: dbArticle.created_at.toString(),
+            archiveDate: dbArticle.archiveDate
          });
       }
 
@@ -52,8 +52,8 @@ export const handlers = [
             description: dbArticle.description,
             content: dbArticle.content,
             author: dbArticle.author,
-            date: dbArticle.created_at,
-            archiveDate: dbArticle.archiveDate as unknown as Date
+            date: dbArticle.created_at.toString(),
+            archiveDate: dbArticle.archiveDate
          });
       }
 
@@ -78,8 +78,8 @@ export const handlers = [
          description: selectedArticle.description,
          content: selectedArticle.content,
          author: selectedArticle.author,
-         date: selectedArticle.created_at,
-         archiveDate: selectedArticle.archiveDate as unknown as Date
+         date: selectedArticle.created_at.toString(),
+         archiveDate: selectedArticle.archiveDate
       };
 
       return res(ctx.json(payload));
@@ -104,8 +104,8 @@ export const handlers = [
          description: createdDoc.description,
          content: createdDoc.content,
          author: createdDoc.author,
-         date: createdDoc.created_at,
-         archiveDate: createdDoc.archiveDate as unknown as Date
+         date: createdDoc.created_at.toString(),
+         archiveDate: createdDoc.archiveDate
       };
 
       return res(ctx.json(payload));
@@ -140,8 +140,8 @@ export const handlers = [
          description: updatedDoc.description,
          content: updatedDoc.content,
          author: updatedDoc.author,
-         date: updatedDoc.created_at,
-         archiveDate: updatedDoc.archiveDate as unknown as Date
+         date: updatedDoc.created_at.toString(),
+         archiveDate: updatedDoc.archiveDate
       };
 
       return res(ctx.json(payload));
@@ -169,8 +169,8 @@ export const handlers = [
          description: deletedDoc.description,
          content: deletedDoc.content,
          author: deletedDoc.author,
-         date: deletedDoc.created_at,
-         archiveDate: deletedDoc.archiveDate as unknown as Date
+         date: deletedDoc.created_at.toString(),
+         archiveDate: deletedDoc.archiveDate
       };
 
       return res(ctx.json(payload));

@@ -3,7 +3,7 @@ import { SpinnerCircularFixed } from "spinners-react";
 
 import { styled, config } from "$stitches";
 
-import type { Article } from "../../entity/domain-articles-entity";
+import type { Article } from "@workspace/domain-articles";
 
 export interface DomainArticlesUiCardProps {
    title: Article["title"];

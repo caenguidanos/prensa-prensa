@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 
-const schema = new mongoose.Schema({
+import type { Article } from "@workspace/domain-articles";
+
+const schema = new mongoose.Schema<Omit<Article, "date">>({
    title: {
       type: String,
       trim: true,
@@ -36,4 +38,4 @@ const schema = new mongoose.Schema({
 
 schema.set("timestamps", true);
 
-export const ArticleMongooseSchema = mongoose.model("article", schema);
+export const schemaDriver = mongoose.model("article", schema);

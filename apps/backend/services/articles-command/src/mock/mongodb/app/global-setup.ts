@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 
-import { getAllCollection } from "../articles.mock";
-import { ArticleMongooseSchema } from "../../../app/app-model";
+import { createCollection } from "../articles.mock";
+import { schemaDriver } from "../../../app/app-model";
 
 export default async function globalSetup() {
    const instance = await MongoMemoryServer.create();
@@ -17,6 +17,6 @@ export default async function globalSetup() {
    await mongoose.disconnect();
 
    await mongoose.connect(`${process.env.MONGODB_URI}`, { dbName: "prensa" });
-   await ArticleMongooseSchema.insertMany(getAllCollection(10));
+   await schemaDriver.insertMany(createCollection(10));
    await mongoose.disconnect();
 }

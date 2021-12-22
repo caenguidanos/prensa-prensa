@@ -34,7 +34,7 @@ test.describe("v1 healthz", () => {
 
       const headers = response.headers();
 
-      expect(headers).toHaveProperty("x-backend", "services-articles-command");
+      expect(headers).toHaveProperty("x-backend", "services-articles-query");
    });
 
    test("should return OK", async ({ request }) => {

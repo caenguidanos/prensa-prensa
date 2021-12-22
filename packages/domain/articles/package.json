@@ -4,15 +4,16 @@
    "main": "dist/cjs/main.js",
    "module": "dist/esm/main.js",
    "types": "dist/types/main.d.ts",
+   "type": "commonjs",
    "exports": {
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.js"
+      "require": "./dist/cjs/main.js",
+      "import": "./dist/esm/main.js"
    },
    "scripts": {
       "lint": "eslint .",
       "build": "rimraf dist && tsc && pnpm build:cjs && pnpm build:esm",
-      "build:cjs": "esbuild ./src/main.ts --bundle --platform=neutral --sourcemap --target=es2015 --outdir=dist/cjs --format=cjs --minify",
-      "build:esm": "esbuild ./src/main.ts --bundle --platform=neutral --sourcemap --target=esnext --outdir=dist/esm --format=esm --minify",
+      "build:cjs": "esbuild ./src/main.ts --bundle --platform=neutral --sourcemap --target=es2015 --outfile=dist/cjs/main.js --format=cjs --minify",
+      "build:esm": "esbuild ./src/main.ts --bundle --platform=neutral --sourcemap --target=esnext --outdir=dist/esm/main.js --format=esm --minify",
       "test": "jest --no-cache",
       "format": "prettier --write ."
    },

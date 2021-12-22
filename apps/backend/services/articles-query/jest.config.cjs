@@ -2,7 +2,6 @@ module.exports = {
    bail: 1,
    verbose: true,
    errorOnDeprecated: true,
-   extensionsToTreatAsEsm: [".ts"],
    testMatch: ["**/src/**/*.spec.ts"],
    globalSetup: "<rootDir>/jest.global-setup.ts",
    globalTeardown: "<rootDir>/jest.global-teardown.ts",
@@ -20,10 +19,5 @@ module.exports = {
          statements: 0 // 🔥
       }
    },
-   preset: "ts-jest/presets/default-esm",
-   globals: {
-      "ts-jest": {
-         useESM: true
-      }
-   }
+   preset: "ts-jest/presets/default-esm"
 };

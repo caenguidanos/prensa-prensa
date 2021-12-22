@@ -9,7 +9,7 @@ import {
    queryArticlesOnlyArchived
 } from "../../data-access/domain-articles-data-access";
 
-import type { ArticleQueryDTO } from "../../entity/domain-articles-entity";
+import type { ArticleQueryDTO } from "@workspace/domain-articles";
 
 export function useArchivedArticles() {
    const [loading, setLoading] = useState<boolean>(false);

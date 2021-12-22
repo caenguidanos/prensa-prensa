@@ -1,29 +1,35 @@
 import faker from "faker";
 import { factory, nullable, primaryKey } from "@mswjs/data";
 
+import type { Article } from "@workspace/domain-articles";
+
 const db = factory({
    articles: {
       title: faker.commerce.productName,
       description: faker.commerce.productDescription,
       content: faker.name.jobDescriptor,
       author: faker.name.firstName,
-      archiveDate: nullable(Date),
+      archiveDate: nullable(String),
       _p: primaryKey(faker.datatype.uuid)
    }
 });
 
-export function createCollection(q: number) {
+export function createCollection(q: number): Omit<Article, "date">[] {
    for (let i = 0; i < q; i++) {
       db.articles.create({ archiveDate: null });
    }
-}
 
-export function getAllCollection(q: number) {
-   createCollection(q);
+   const collection: Omit<Article, "date">[] = [];
 
-   return db.articles.getAll().map((k) => {
-      const w = { ...k };
-      delete w._p;
-      return w;
-   });
+   for (const h of db.articles.getAll()) {
+      collection.push({
+         title: h.title,
+         description: h.description,
+         content: h.content,
+         author: h.author,
+         archiveDate: null
+      });
+   }
+
+   return collection;
 }

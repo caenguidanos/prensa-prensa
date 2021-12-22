@@ -8,7 +8,7 @@ export const db = factory({
       description: faker.commerce.productDescription,
       content: faker.name.jobDescriptor,
       author: faker.name.firstName,
-      archiveDate: nullable(Date),
+      archiveDate: nullable(String),
       created_at: faker.date.recent,
       updated_at: faker.date.recent
    }

@@ -1,8 +1,8 @@
 import type {
-   ArticleCommandCreatePayload,
-   ArticleCommandUpdatePayload,
-   ArticleQueryDTO
-} from "../entity/domain-articles-entity";
+   ArticleQueryDTO,
+   ArticleCommandUpdateDTO,
+   ArticleCommandCreateDTO
+} from "@workspace/domain-articles";
 
 const authorization = "Bearer 1234...";
 
@@ -50,7 +50,7 @@ export async function queryArticleByID(id: string, signal: AbortSignal): Promise
 }
 
 export async function commandCreateArticle(
-   payload: ArticleCommandCreatePayload,
+   payload: ArticleCommandCreateDTO,
    signal: AbortSignal
 ): Promise<ArticleQueryDTO> {
    const response = await fetch(url("/"), {
@@ -71,7 +71,7 @@ export async function commandCreateArticle(
 
 export async function commandUpdateArticleByID(
    id: string,
-   payload: ArticleCommandUpdatePayload,
+   payload: ArticleCommandUpdateDTO,
    signal: AbortSignal
 ): Promise<ArticleQueryDTO> {
    const response = await fetch(url(`/${id}`), {

@@ -24,7 +24,7 @@ Default.args = {
    title: faker.name.title(),
    description: faker.commerce.productDescription(),
    author: faker.name.firstName(),
-   date: new Date(),
+   date: new Date().toString(),
    loading: false,
    mode: "archive",
    onClick: () => {
@@ -37,7 +37,7 @@ Loading.args = {
    title: faker.name.title(),
    description: faker.commerce.productDescription(),
    author: faker.name.firstName(),
-   date: new Date(),
+   date: new Date().toString(),
    loading: true,
    mode: "archive",
    onClick: () => {
@@ -50,7 +50,7 @@ Archived.args = {
    title: faker.name.title(),
    description: faker.commerce.productDescription(),
    author: faker.name.firstName(),
-   date: new Date(),
+   date: new Date().toString(),
    loading: false,
    mode: "delete",
    onClick: () => {

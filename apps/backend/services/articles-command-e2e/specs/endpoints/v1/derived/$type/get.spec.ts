@@ -62,7 +62,7 @@ test.describe("v1 getArticlesByType", () => {
 
       const headers = response.headers();
 
-      expect(headers).toHaveProperty("x-backend", "services-articles-command");
+      expect(headers).toHaveProperty("x-backend", "services-articles-query");
    });
 
    test("should return $archive articles", async ({ request }) => {

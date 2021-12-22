@@ -3,10 +3,12 @@ import esbuild from "esbuild";
 const makeAllPackagesExternalPlugin = {
    name: "make-all-packages-external",
    setup(build) {
-      build.onResolve({ filter: /^[^./]|^\.[^./]|^\.\.[^/]/ }, (args) => ({
-         path: args.path,
-         external: true
-      }));
+      build.onResolve({ filter: /^[^./]|^\.[^./]|^\.\.[^/]/ }, (args) => {
+         return {
+            path: args.path,
+            external: true
+         };
+      });
    }
 };
 
@@ -15,9 +17,9 @@ const isProduction = process.env.NODE_ENV === "production";
 const { metafile } = await esbuild.build({
    entryPoints: ["src/main.ts"],
    outfile: "dist/main.js",
-   format: "esm",
+   format: "cjs",
    platform: "node",
-   target: "node16.13.0",
+   target: "esnext",
    metafile: true,
    treeShaking: true,
    bundle: true,

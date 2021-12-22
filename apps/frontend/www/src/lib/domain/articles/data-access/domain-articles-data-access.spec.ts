@@ -4,10 +4,10 @@ import { HttpStatus } from "@nestjs/common/enums";
 import * as articlesRepository from "./domain-articles-data-access";
 
 import type {
-   ArticleCommandCreatePayload,
-   ArticleCommandUpdatePayload,
-   ArticleQueryDTO
-} from "../entity/domain-articles-entity";
+   ArticleQueryDTO,
+   ArticleCommandUpdateDTO,
+   ArticleCommandCreateDTO
+} from "@workspace/domain-articles";
 
 describe("domainArticles dataAccess", () => {
    let id: string | undefined;
@@ -62,11 +62,12 @@ describe("domainArticles dataAccess", () => {
    });
 
    it("should command create article", async () => {
-      const payload: ArticleCommandCreatePayload = {
+      const payload: ArticleCommandCreateDTO = {
          title: faker.commerce.productName(),
          description: faker.commerce.productDescription(),
          content: faker.name.jobDescriptor(),
-         author: faker.name.firstName()
+         author: faker.name.firstName(),
+         archiveDate: null
       };
 
       try {
@@ -91,7 +92,7 @@ describe("domainArticles dataAccess", () => {
    });
 
    it("should command update article", async () => {
-      const payload: ArticleCommandUpdatePayload = {
+      const payload: ArticleCommandUpdateDTO = {
          description: faker.commerce.productDescription()
       };
 
@@ -122,7 +123,7 @@ describe("domainArticles dataAccess", () => {
    });
 
    it("should not command update article with invalid id", async () => {
-      const payload: ArticleCommandUpdatePayload = {
+      const payload: ArticleCommandUpdateDTO = {
          description: faker.commerce.productDescription()
       };
 

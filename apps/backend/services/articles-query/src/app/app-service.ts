@@ -1,38 +1,35 @@
 import mongoose from "mongoose";
 
-import { ArticleMongooseSchema } from "./app-model";
-import { composeArticleForClient } from "./util/app-util-map-article";
+import { ArticleQueryDTO, ArticleSchema, composeArticleQueryDTO } from "@workspace/domain-articles";
 
-export async function getArticleByIDService(_id: string) {
+import { schemaDriver } from "./app-model";
+
+export async function getArticleByIDService(_id: string): Promise<ArticleQueryDTO | null> {
    if (!mongoose.isValidObjectId(_id)) {
       return null;
    }
 
-   const existsDoc = await ArticleMongooseSchema.exists({ _id });
+   const existsDoc = await schemaDriver.exists({ _id });
 
    if (existsDoc) {
-      const data = await ArticleMongooseSchema.findById(_id);
-
-      return composeArticleForClient(data);
+      const data = await schemaDriver.findById(_id);
+      return composeArticleQueryDTO(data as unknown as ArticleSchema);
    }
 
    return null;
 }
 
-export async function getArticlesService() {
-   const data = await ArticleMongooseSchema.find({});
-
-   return data.map((k) => composeArticleForClient(k));
+export async function getArticlesService(): Promise<ArticleQueryDTO[]> {
+   const data = await schemaDriver.find({});
+   return data.map((k) => composeArticleQueryDTO(k as unknown as ArticleSchema));
 }
 
-export async function getArticlesDerivedArchiveService() {
-   const data = await ArticleMongooseSchema.find({ archiveDate: { $ne: null } });
-
-   return data.map((k) => composeArticleForClient(k));
+export async function getArticlesDerivedArchiveService(): Promise<ArticleQueryDTO[]> {
+   const data = await schemaDriver.find({ archiveDate: { $ne: null } });
+   return data.map((k) => composeArticleQueryDTO(k as unknown as ArticleSchema));
 }
 
-export async function getArticlesDerivedNewService() {
-   const data = await ArticleMongooseSchema.find({ archiveDate: { $eq: null } });
-
-   return data.map((k) => composeArticleForClient(k));
+export async function getArticlesDerivedNewService(): Promise<ArticleQueryDTO[]> {
+   const data = await schemaDriver.find({ archiveDate: { $eq: null } });
+   return data.map((k) => composeArticleQueryDTO(k as unknown as ArticleSchema));
 }

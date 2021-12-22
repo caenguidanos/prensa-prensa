@@ -34,7 +34,7 @@ test.describe("v1 getAllArticlesByID", () => {
 
       const headers = response.headers();
 
-      expect(headers).toHaveProperty("x-backend", "services-articles-command");
+      expect(headers).toHaveProperty("x-backend", "services-articles-query");
    });
 
    test("should retrieve article by ID", async ({ request }) => {

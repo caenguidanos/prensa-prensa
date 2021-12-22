@@ -1,4 +1,4 @@
-import { ArticleMongooseSchema } from "./app-model";
+import { schemaDriver } from "./app-model";
 
 import {
    getArticlesService,
@@ -43,13 +43,13 @@ describe("service", () => {
 
       const [a, b, c] = preUpdateData;
 
-      await ArticleMongooseSchema.findByIdAndUpdate(a._id, {
+      await schemaDriver.findByIdAndUpdate(a._id, {
          archiveDate: new Date()
       });
-      await ArticleMongooseSchema.findByIdAndUpdate(b._id, {
+      await schemaDriver.findByIdAndUpdate(b._id, {
          archiveDate: new Date()
       });
-      await ArticleMongooseSchema.findByIdAndUpdate(c._id, {
+      await schemaDriver.findByIdAndUpdate(c._id, {
          archiveDate: new Date()
       });
 
