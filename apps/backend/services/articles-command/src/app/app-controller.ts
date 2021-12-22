@@ -10,6 +10,16 @@ controller.get("/", async (_req, res) => {
 
       res.json(dto).end();
    } catch (error) {
+      console.log(error);
+      res.status(500).send("Internal Server Error");
+   }
+});
+
+controller.get("/healthz", (_req, res) => {
+   try {
+      res.send("OK").end();
+   } catch (error) {
+      console.log(error);
       res.status(500).send("Internal Server Error");
    }
 });
@@ -24,6 +34,7 @@ controller.get("/:id", async (req, res) => {
 
       return res.status(404).send("Not Found").end();
    } catch (error) {
+      console.log(error);
       res.status(500).send("Internal Server Error");
    }
 });
@@ -54,14 +65,7 @@ controller.get("/derived/:type", async (req, res) => {
          res.json(dto).end();
       }
    } catch (error) {
-      res.status(500).send("Internal Server Error");
-   }
-});
-
-controller.get("/healtz", (_req, res) => {
-   try {
-      res.send("OK").end();
-   } catch (error) {
+      console.log(error);
       res.status(500).send("Internal Server Error");
    }
 });

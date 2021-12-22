@@ -29,6 +29,14 @@ test.describe("v1 getAllArticlesByID", () => {
       expect(response.status()).toBe(405);
    });
 
+   test("should be set x-backend header", async ({ request }) => {
+      const response = await request.get("/v1");
+
+      const headers = response.headers();
+
+      expect(headers).toHaveProperty("x-backend", "services-articles-query");
+   });
+
    test("should retrieve article by ID", async ({ request }) => {
       const firstResponse = await request.get("/v1");
       expect(firstResponse.ok()).toBe(true);

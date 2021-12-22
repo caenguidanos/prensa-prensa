@@ -13,3 +13,11 @@ export function methods(value: HttpMethod[]): RequestHandler {
       return res.status(405).send("Method Not Allowed").end();
    };
 }
+
+export function backendSign(h: string): RequestHandler {
+   return (_req: Request, res: Response, next: NextFunction) => {
+      res.setHeader("x-backend", h);
+
+      return next();
+   };
+}

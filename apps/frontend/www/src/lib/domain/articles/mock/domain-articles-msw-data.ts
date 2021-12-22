@@ -14,8 +14,12 @@ export const db = factory({
    }
 });
 
-export function createCollection(): void {
-   for (let i = 0; i < 5; i++) {
+export function createCollection(l: number): void {
+   for (let i = 0; i < l; i++) {
       db.articles.create({ archiveDate: null });
    }
+}
+
+export function createDocument() {
+   return db.articles.create({ archiveDate: null });
 }

@@ -3,8 +3,11 @@ import { styled } from "$stitches";
 import {
    DomainArticlesUiCard,
    DomainArticlesUiCardEmpty,
+   DomainArticlesUiButtonRandom,
    useNewArticles
 } from "$lib/domain/articles";
+
+import { createDocument } from "$lib/domain/articles/mock/domain-articles-msw-data";
 
 import { ViewPagesIndexUiHeader, ViewPagesIndexUiPrincipal } from "../ui";
 
@@ -25,12 +28,21 @@ const ViewPagesIndexArticles = styled("div", {
 });
 
 export const ViewPagesIndex: PageWithLayout<ViewPagesIndexProps> = () => {
-   const { data, loading, commandArchiveArticleByID } = useNewArticles();
+   const { data, loading, commandArchiveArticleByID, queryRefreshArticles } = useNewArticles();
 
-   const onClick = (id: string) => {
+   const onCardClick = (id: string) => {
       return async () => {
          await commandArchiveArticleByID(id);
       };
+   };
+
+   const onButtonClick = async () => {
+      try {
+         createDocument();
+         await queryRefreshArticles();
+      } catch (error) {
+         console.error(error);
+      }
    };
 
    return (
@@ -44,7 +56,7 @@ export const ViewPagesIndex: PageWithLayout<ViewPagesIndexProps> = () => {
                   <DomainArticlesUiCard
                      key={k._id}
                      {...k}
-                     onClick={onClick(k._id)}
+                     onClick={onCardClick(k._id)}
                      loading={loading}
                      mode="archive"
                   />
@@ -53,6 +65,8 @@ export const ViewPagesIndex: PageWithLayout<ViewPagesIndexProps> = () => {
          ) : (
             <DomainArticlesUiCardEmpty title="Ya no quedan publicaciones por achivar" />
          )}
+
+         <DomainArticlesUiButtonRandom onClick={onButtonClick} />
       </ViewPagesIndexContainer>
    );
 };

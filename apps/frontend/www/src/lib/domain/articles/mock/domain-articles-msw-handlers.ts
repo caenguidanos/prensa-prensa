@@ -5,10 +5,10 @@ import { db } from "./domain-articles-msw-data";
 
 import type { ArticleQueryDTO } from "../entity/domain-articles-entity";
 
-const url = (p: string) => `http://localhost:3000${p}`;
+const url = (p: string) => `http://localhost:3000/articles${p}`;
 
 export const handlers = [
-   rest.get(url("/articles"), (_req, res, ctx) => {
+   rest.get(url("/"), (_req, res, ctx) => {
       const payload: ArticleQueryDTO[] = [];
 
       for (const dbArticle of db.articles.getAll()) {
@@ -25,7 +25,7 @@ export const handlers = [
 
       return res(ctx.json(payload));
    }),
-   rest.get(url("/articles/derived/new"), (_req, res, ctx) => {
+   rest.get(url("/derived/new"), (_req, res, ctx) => {
       const payload: ArticleQueryDTO[] = [];
 
       for (const dbArticle of db.articles.getAll()) {
@@ -40,9 +40,9 @@ export const handlers = [
          });
       }
 
-      res(ctx.json(payload.filter((k) => !k.archiveDate)));
+      return res(ctx.json(payload.filter((k) => !k.archiveDate)));
    }),
-   rest.get(url("/articles/derived/archive"), (_req, res, ctx) => {
+   rest.get(url("/derived/archive"), (_req, res, ctx) => {
       const payload: ArticleQueryDTO[] = [];
 
       for (const dbArticle of db.articles.getAll()) {
@@ -57,9 +57,9 @@ export const handlers = [
          });
       }
 
-      res(ctx.json(payload.filter((k) => !!k.archiveDate)));
+      return res(ctx.json(payload.filter((k) => !!k.archiveDate)));
    }),
-   rest.get(url("/articles/:id"), (req, res, ctx) => {
+   rest.get(url("/:id"), (req, res, ctx) => {
       const selectedArticle = db.articles.findFirst({
          where: {
             _id: {
@@ -84,7 +84,7 @@ export const handlers = [
 
       return res(ctx.json(payload));
    }),
-   rest.post(url("/articles"), (req, res, ctx) => {
+   rest.post(url("/"), (req, res, ctx) => {
       if (!req.headers.get("authorization")?.includes("Bearer ")) {
          return res(ctx.status(HttpStatus.UNAUTHORIZED, "Unauthorized"));
       }
@@ -110,7 +110,7 @@ export const handlers = [
 
       return res(ctx.json(payload));
    }),
-   rest.patch(url("/articles/:id"), (req, res, ctx) => {
+   rest.patch(url("/:id"), (req, res, ctx) => {
       if (!req.headers.get("authorization")?.includes("Bearer ")) {
          return res(ctx.status(HttpStatus.UNAUTHORIZED, "Unauthorized"));
       }
@@ -146,7 +146,7 @@ export const handlers = [
 
       return res(ctx.json(payload));
    }),
-   rest.delete(url("/articles/:id"), (req, res, ctx) => {
+   rest.delete(url("/:id"), (req, res, ctx) => {
       if (!req.headers.get("authorization")?.includes("Bearer ")) {
          return res(ctx.status(HttpStatus.UNAUTHORIZED, "Unauthorized"));
       }

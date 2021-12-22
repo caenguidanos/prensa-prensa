@@ -11,9 +11,13 @@ else
    #    exit 1
    # fi
 
-   pnpm all:lint
-   pnpm all:test
-   pnpm all:format
+   pnpm packages:lint
+   pnpm packages:test
+   pnpm packages:format
+
+   pnpm apps:lint
+   pnpm apps:test
+   pnpm apps:format
 
    git add .
 fi

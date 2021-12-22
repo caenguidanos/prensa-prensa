@@ -12,33 +12,33 @@ import {
 
 import type { ArticleQueryDTO } from "../../entity/domain-articles-entity";
 
-const ToastSuccess = css({
-   border: "none",
-   padding: "$1",
-   color: "$green700",
-   backgroundColor: "$green100",
-   borderRadius: "$1",
-   fontFamily: "$oswald",
-   fontSize: "$sm",
-   shadow: "sm"
-});
-
-const ToastError = css({
-   border: "none",
-   padding: "$1",
-   color: "$red700",
-   backgroundColor: "$red100",
-   borderRadius: "$1",
-   fontFamily: "$oswald",
-   fontSize: "$sm",
-   shadow: "sm"
-});
-
 export function useNewArticles() {
    const [, appBarStateActions] = useAppBar();
 
    const [loading, setLoading] = useState<boolean>(false);
    const [data, setData] = useState<ArticleQueryDTO[]>([]);
+
+   const ToastSuccess = css({
+      border: "none",
+      padding: "$1",
+      color: "$green700",
+      backgroundColor: "$green100",
+      borderRadius: "$1",
+      fontFamily: "$oswald",
+      fontSize: "$sm",
+      shadow: "sm"
+   });
+
+   const ToastError = css({
+      border: "none",
+      padding: "$1",
+      color: "$red700",
+      backgroundColor: "$red100",
+      borderRadius: "$1",
+      fontFamily: "$oswald",
+      fontSize: "$sm",
+      shadow: "sm"
+   });
 
    const queryRefreshArticles = useCallback(async () => {
       const abortController = new AbortController();
@@ -48,6 +48,7 @@ export function useNewArticles() {
 
          setData(data);
       } catch (error) {
+         console.error(error);
          abortController.abort();
       }
    }, [setData]);
@@ -70,17 +71,18 @@ export function useNewArticles() {
             setData((prev) => prev.filter((k) => k._id !== id));
 
             toast.success("Successfully archived!", {
-               style: null,
+               style: {},
                className: ToastSuccess(),
                icon: <CheckIcon />
             });
 
             appBarStateActions.incrementArchivedCount();
          } catch (error) {
+            console.error(error);
             abortController.abort();
 
             toast.error("Imposible to archive!", {
-               style: null,
+               style: {},
                className: ToastError(),
                icon: <Cross2Icon />
             });
@@ -95,5 +97,5 @@ export function useNewArticles() {
       queryRefreshArticles();
    }, []);
 
-   return { commandArchiveArticleByID, queryRefreshArticles, loading, data };
+   return { commandArchiveArticleByID, queryRefreshArticles, loading, data, setData };
 }

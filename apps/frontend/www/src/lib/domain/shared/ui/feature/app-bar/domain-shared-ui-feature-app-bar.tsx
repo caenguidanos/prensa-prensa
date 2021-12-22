@@ -26,7 +26,7 @@ const DomainSharedUiAppBarPrimitive = styled("nav", {
    transitionDuration: "350ms"
 });
 
-const DomainSharedUiAppBarLinkContainerPrimitive = styled("div", {
+const DomainSharedUiAppBarLinkContainerPrimitive = styled("span", {
    display: "flex",
    alignItems: "center",
    justifyContent: "start",
@@ -70,7 +70,7 @@ const DomainSharedUiAppBarLinkPrimitiveBadgeContent = styled("span", {
    textAlign: "match-parent"
 });
 
-const DomainSharedUiAppBarAvatarContainerPrimitive = styled("div", {
+const DomainSharedUiAppBarAvatarContainerPrimitive = styled("span", {
    display: "flex",
    alignItems: "center",
    justifyContent: "end",
@@ -148,7 +148,7 @@ const PopoverContentTitle = styled("p", {
    justifyContent: "space-between"
 });
 
-const PopoverContentTitleIcons = styled("div", {
+const PopoverContentTitleIcons = styled("span", {
    display: "flex",
    alignItems: "center",
    justifyContent: "end",

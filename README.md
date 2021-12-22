@@ -15,15 +15,24 @@
 pnpm install
 ```
 
-## Run
+## Packages
+
+```
+pnpm packages:build
+pnpm packages:lint
+pnpm packages:test
+pnpm packages:format
+```
+
+## Apps
 
 > `start` doesn't works if you not provides custom environment **variables** in script
 
 ```
-pnpm all:dev
-pnpm all:lint
-pnpm all:test
-pnpm all:build
-pnpm all:start
-pnpm all:e2e
+pnpm apps:dev
+pnpm apps:lint
+pnpm apps:test
+pnpm apps:build
+pnpm apps:start
+pnpm apps:e2e
 ```

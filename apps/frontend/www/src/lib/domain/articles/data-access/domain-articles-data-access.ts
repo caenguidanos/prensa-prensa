@@ -4,13 +4,13 @@ import type {
    ArticleQueryDTO
 } from "../entity/domain-articles-entity";
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 const authorization = "Bearer 1234...";
 
-export async function queryArticles(signal: AbortSignal): Promise<ArticleQueryDTO[]> {
-   let url = `${baseUrl}/articles`;
+const url = (p: string): string =>
+   `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"}/articles${p}`;
 
-   const response = await fetch(url, { signal });
+export async function queryArticles(signal: AbortSignal): Promise<ArticleQueryDTO[]> {
+   const response = await fetch(url("/"), { signal });
 
    if (response.ok) {
       return response.json();
@@ -20,9 +20,7 @@ export async function queryArticles(signal: AbortSignal): Promise<ArticleQueryDT
 }
 
 export async function queryArticlesOnlyNew(signal: AbortSignal): Promise<ArticleQueryDTO[]> {
-   let url = `${baseUrl}/articles/derived/new`;
-
-   const response = await fetch(url, { signal });
+   const response = await fetch(url("/derived/new"), { signal });
 
    if (response.ok) {
       return response.json();
@@ -32,9 +30,7 @@ export async function queryArticlesOnlyNew(signal: AbortSignal): Promise<Article
 }
 
 export async function queryArticlesOnlyArchived(signal: AbortSignal): Promise<ArticleQueryDTO[]> {
-   let url = `${baseUrl}/articles/derived/archive`;
-
-   const response = await fetch(url, { signal });
+   const response = await fetch(url("/derived/archive"), { signal });
 
    if (response.ok) {
       return response.json();
@@ -44,9 +40,7 @@ export async function queryArticlesOnlyArchived(signal: AbortSignal): Promise<Ar
 }
 
 export async function queryArticleByID(id: string, signal: AbortSignal): Promise<ArticleQueryDTO> {
-   const url = `${baseUrl}/articles/${id}`;
-
-   const response = await fetch(url, { signal });
+   const response = await fetch(url(`/${id}`), { signal });
 
    if (response.ok) {
       return response.json();
@@ -59,9 +53,7 @@ export async function commandCreateArticle(
    payload: ArticleCommandCreatePayload,
    signal: AbortSignal
 ): Promise<ArticleQueryDTO> {
-   const url = `${baseUrl}/articles`;
-
-   const response = await fetch(url, {
+   const response = await fetch(url("/"), {
       method: "POST",
       signal,
       body: JSON.stringify(payload),
@@ -82,9 +74,7 @@ export async function commandUpdateArticleByID(
    payload: ArticleCommandUpdatePayload,
    signal: AbortSignal
 ): Promise<ArticleQueryDTO> {
-   const url = `${baseUrl}/articles/${id}`;
-
-   const response = await fetch(url, {
+   const response = await fetch(url(`/${id}`), {
       method: "PATCH",
       body: JSON.stringify(payload),
       signal,
@@ -104,9 +94,7 @@ export async function commandDeleteArticleByID(
    id: string,
    signal: AbortSignal
 ): Promise<ArticleQueryDTO> {
-   const url = `${baseUrl}/articles/${id}`;
-
-   const response = await fetch(url, {
+   const response = await fetch(url(`/${id}`), {
       method: "DELETE",
       signal,
       headers: {

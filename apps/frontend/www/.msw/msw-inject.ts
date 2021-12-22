@@ -10,7 +10,7 @@ if (process.env.NODE_ENV !== "production") {
       const { createDb } = await import("./msw-data");
 
       createDb();
-      worker.start();
+      await worker.start();
    }
 }
 
