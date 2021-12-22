@@ -1,9 +1,21 @@
+import mongoose from "mongoose";
+
 import { ArticleMongooseSchema } from "./app-model";
 
 export async function getArticleByIDService(_id: string) {
-   const data = await ArticleMongooseSchema.findById(_id);
+   if (!mongoose.isValidObjectId(_id)) {
+      return null;
+   }
 
-   return mapArticleToClient(data);
+   const existsDoc = await ArticleMongooseSchema.exists({ _id });
+
+   if (existsDoc) {
+      const data = await ArticleMongooseSchema.findById(_id);
+
+      return mapArticleToClient(data);
+   }
+
+   return null;
 }
 
 export async function getArticlesService() {

@@ -104,4 +104,10 @@ describe("service", () => {
       expect(r.author).toBeTruthy();
       expect(r.date).toBeTruthy();
    });
+
+   it("should not get article by invalid id", async () => {
+      const r = await getArticleByIDService("1234");
+
+      expect(r).toBeNull();
+   });
 });

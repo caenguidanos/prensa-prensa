@@ -17,8 +17,13 @@ pnpm install
 
 ## Run
 
+> `start` doesn't works if you not provides custom environment **variables** in script
+
 ```
+pnpm all:dev
 pnpm all:lint
 pnpm all:test
 pnpm all:build
+pnpm all:start
+pnpm all:e2e
 ```

@@ -2,29 +2,34 @@ import express from "express";
 
 import * as service from "./app-service";
 
-const router = express.Router();
+const controller = express.Router();
 
-router.get("/", async (_req, res) => {
+controller.get("/", async (_req, res) => {
    try {
       const dto = await service.getArticlesService();
 
       res.json(dto).end();
    } catch (error) {
-      res.status(500).send("Service Unavailable");
+      res.status(500).send("Internal Server Error");
    }
 });
 
-router.get("/:id", async (req, res) => {
+controller.get("/:id", async (req, res) => {
    try {
       const dto = await service.getArticleByIDService(req.params.id);
 
-      res.json(dto).end();
+      if (dto) {
+         return res.json(dto).end();
+      }
+
+      return res.status(404).send("Not Found").end();
    } catch (error) {
-      res.status(500).send("Service Unavailable");
+      console.log(error);
+      res.status(500).send("Internal Server Error");
    }
 });
 
-router.get("/derived/:type", async (req, res) => {
+controller.get("/derived/:type", async (req, res) => {
    try {
       const derivedType = req.params.type;
 
@@ -50,16 +55,16 @@ router.get("/derived/:type", async (req, res) => {
          res.json(dto).end();
       }
    } catch (error) {
-      res.status(500).send("Service Unavailable");
+      res.status(500).send("Internal Server Error");
    }
 });
 
-router.get("/healtz", (_req, res) => {
+controller.get("/healtz", (_req, res) => {
    try {
       res.send("OK").end();
    } catch (error) {
-      res.status(500).send("Service Unavailable");
+      res.status(500).send("Internal Server Error");
    }
 });
 
-export default router;
+export { controller };

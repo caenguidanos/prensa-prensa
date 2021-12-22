@@ -1,9 +1,9 @@
 import { test } from "@playwright/test";
 
 test("Index Page", async ({ request }) => {
-   const response = await request.get("/v1");
+   const response = await request.get("/");
 
-   const body = await response.json();
+   const body = await response.text();
 
    console.log(body);
 });

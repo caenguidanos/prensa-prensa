@@ -23,7 +23,7 @@ export default {
       trace: "retry-with-trace"
    },
    webServer: {
-      command: "cd ../../.. && pnpm frontend-www:dev",
+      command: "pnpm dev --filter frontend-www",
       port: 3000,
       timeout: 30 * 1000,
       reuseExistingServer: true

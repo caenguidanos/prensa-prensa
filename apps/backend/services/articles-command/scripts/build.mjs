@@ -10,6 +10,8 @@ const makeAllPackagesExternalPlugin = {
    }
 };
 
+const isProduction = process.env.NODE_ENV === "production";
+
 const { metafile } = await esbuild.build({
    entryPoints: ["src/main.ts"],
    outfile: "dist/main.js",
@@ -20,10 +22,10 @@ const { metafile } = await esbuild.build({
    treeShaking: true,
    bundle: true,
    plugins: [makeAllPackagesExternalPlugin],
-   minify: false,
+   minify: isProduction,
    sourcemap: true
 });
 
-const out = await esbuild.analyzeMetafile(metafile);
+const out = await esbuild.analyzeMetafile(metafile, { color: true, verbose: true });
 
 console.info(out);

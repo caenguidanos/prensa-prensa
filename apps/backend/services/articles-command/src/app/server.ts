@@ -4,7 +4,8 @@ import cors from "cors";
 import compression from "compression";
 import morgan from "morgan";
 
-import controller from "./app-controller";
+import { controller } from "./app-controller";
+import { methods } from "./app-middleware";
 
 import * as mongodbConfig from "./config/mongo-db.config";
 
@@ -17,7 +18,7 @@ export async function createApp(): Promise<Express> {
       server.use(compression());
       server.use(morgan("tiny"));
 
-      server.use("/v1", controller);
+      server.use("/v1", methods(["GET"]), controller);
 
       await mongodbConfig.connectClient();
 
