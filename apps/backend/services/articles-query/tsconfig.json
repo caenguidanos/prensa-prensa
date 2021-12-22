@@ -4,7 +4,9 @@
       "baseUrl": ".",
       "types": ["express", "node", "jest"],
       "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true
+      "allowSyntheticDefaultImports": true,
+      "emitDeclarationOnly": true,
+      "declaration": true
    },
    "files": [],
    "exclude": ["**/*.spec.ts"],

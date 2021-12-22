@@ -1,7 +1,7 @@
 import url from "url";
 import process from "process";
 
-import { createApp } from "./app/server.js";
+import { createApp } from "./app/server";
 
 const isExecuted: boolean = process.argv[1] === url.fileURLToPath(import.meta.url);
 
@@ -21,8 +21,8 @@ if (isExecuted) {
 
       dotenv.config();
 
-      const { default: mongodbSetup } = await import("./mock/mongodb/app/global-setup.js");
-      const { default: mongodbTeardown } = await import("./mock/mongodb/app/global-teardown.js");
+      const { default: mongodbSetup } = await import("./mock/mongodb/app/global-setup");
+      const { default: mongodbTeardown } = await import("./mock/mongodb/app/global-teardown");
 
       await mongodbSetup();
 

@@ -11,8 +11,8 @@ else
    #    exit 1
    # fi
 
-   pnpm frontend-www:lint
-   pnpm frontend-www:test
+   pnpm all:lint
+   pnpm all:test
    pnpm all:format
 
    git add .

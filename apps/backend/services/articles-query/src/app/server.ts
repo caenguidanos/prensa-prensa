@@ -4,9 +4,9 @@ import cors from "cors";
 import compression from "compression";
 import morgan from "morgan";
 
-import controller from "./app-controller.js";
+import controller from "./app-controller";
 
-import * as mongodbConfig from "./config/mongo-db.config.js";
+import * as mongodbConfig from "./config/mongo-db.config";
 
 export async function createApp(): Promise<Express> {
    try {

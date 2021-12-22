@@ -14,3 +14,11 @@
 ```bash
 pnpm install
 ```
+
+## Run
+
+```
+pnpm all:lint
+pnpm all:test
+pnpm all:build
+```

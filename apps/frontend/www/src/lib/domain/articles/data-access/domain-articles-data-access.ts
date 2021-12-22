@@ -20,7 +20,7 @@ export async function queryArticles(signal: AbortSignal): Promise<ArticleQueryDT
 }
 
 export async function queryArticlesOnlyNew(signal: AbortSignal): Promise<ArticleQueryDTO[]> {
-   let url = `${baseUrl}/articles?new=true`;
+   let url = `${baseUrl}/articles/derived/new`;
 
    const response = await fetch(url, { signal });
 
@@ -32,7 +32,7 @@ export async function queryArticlesOnlyNew(signal: AbortSignal): Promise<Article
 }
 
 export async function queryArticlesOnlyArchived(signal: AbortSignal): Promise<ArticleQueryDTO[]> {
-   let url = `${baseUrl}/articles?new=false`;
+   let url = `${baseUrl}/articles/derived/archive`;
 
    const response = await fetch(url, { signal });
 

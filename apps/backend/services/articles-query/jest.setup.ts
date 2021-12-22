@@ -5,11 +5,12 @@ import { ArticleMongooseSchema } from "./src/app/app-model";
 
 let connection: typeof mongoose | undefined;
 
-beforeEach(async () => {
+beforeAll(async () => {
    connection = await mongoose.connect(process.env.MONGODB_URI, { dbName: "prensa" });
    await ArticleMongooseSchema.insertMany(getAllCollection(10));
 });
 
-afterEach(async () => {
+afterAll(async () => {
+   await mongoose.connection.db.dropDatabase();
    await connection.disconnect();
 });

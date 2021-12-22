@@ -11,6 +11,6 @@ else
    #    exit 1
    # fi
 
-   pnpm frontend-www:build
-   pnpm frontend-www-e2e:e2e
+   pnpm all:build
+   pnpm all:e2e
 fi

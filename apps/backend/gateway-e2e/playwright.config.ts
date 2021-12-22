@@ -1,5 +1,6 @@
 import path from "path";
-import { devices, PlaywrightTestConfig } from "@playwright/test";
+
+import type { PlaywrightTestConfig } from "@playwright/test";
 
 export default {
    preserveOutput: "always",
@@ -23,38 +24,12 @@ export default {
       trace: "retry-with-trace"
    },
    webServer: {
-      command: "cd ../.. && pnpm www:dev",
+      command: "pnpm dev --filter backend-gateway",
       port: 3000,
       timeout: 30 * 1000,
-      reuseExistingServer: true
-   },
-   projects: [
-      {
-         name: "Desktop Chrome",
-         use: {
-            trace: "on",
-            video: "on",
-            screenshot: "on",
-            ...devices["Desktop Chrome"]
-         }
-      },
-      {
-         name: "Tablet Android",
-         use: {
-            trace: "on",
-            video: "on",
-            screenshot: "on",
-            ...devices["Galaxy Tab S4"]
-         }
-      },
-      {
-         name: "Mobile Android",
-         use: {
-            trace: "on",
-            video: "on",
-            screenshot: "on",
-            ...devices["Pixel 5"]
-         }
+      reuseExistingServer: true,
+      env: {
+         PORT: 3000 as unknown
       }
-   ]
+   }
 } as PlaywrightTestConfig;

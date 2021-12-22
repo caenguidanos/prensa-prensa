@@ -1,17 +1,27 @@
 import esbuild from "esbuild";
-import glob from "tiny-glob";
 
-const entryPoints = await glob("src/**/*.ts");
+const makeAllPackagesExternalPlugin = {
+   name: "make-all-packages-external",
+   setup(build) {
+      build.onResolve({ filter: /^[^./]|^\.[^./]|^\.\.[^/]/ }, (args) => ({
+         path: args.path,
+         external: true
+      }));
+   }
+};
 
 const { metafile } = await esbuild.build({
-   entryPoints,
-   outdir: "dist",
+   entryPoints: ["src/main.ts"],
+   outfile: "dist/main.js",
    format: "esm",
    platform: "node",
    target: "node16.13.0",
    metafile: true,
    treeShaking: true,
-   outbase: "src"
+   bundle: true,
+   plugins: [makeAllPackagesExternalPlugin],
+   minify: false,
+   sourcemap: true
 });
 
 const out = await esbuild.analyzeMetafile(metafile);

@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 
-import { getAllCollection } from "../articles.mock.js";
-import { ArticleMongooseSchema } from "../../../app/app-model.js";
+import { getAllCollection } from "../articles.mock";
+import { ArticleMongooseSchema } from "../../../app/app-model";
 
 export default async function globalSetup() {
    const instance = await MongoMemoryServer.create();

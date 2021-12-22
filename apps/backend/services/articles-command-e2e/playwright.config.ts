@@ -1,5 +1,6 @@
 import path from "path";
-import { devices, PlaywrightTestConfig } from "@playwright/test";
+
+import type { PlaywrightTestConfig } from "@playwright/test";
 
 export default {
    preserveOutput: "always",
@@ -30,16 +31,5 @@ export default {
       env: {
          PORT: 3000 as unknown
       }
-   },
-   projects: [
-      {
-         name: "Desktop Chrome",
-         use: {
-            trace: "on",
-            video: "on",
-            screenshot: "on",
-            ...devices["Desktop Chrome"]
-         }
-      }
-   ]
+   }
 } as PlaywrightTestConfig;

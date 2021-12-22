@@ -8,7 +8,7 @@ import type { ArticleQueryDTO } from "../entity/domain-articles-entity";
 const url = (p: string) => `http://localhost:3000${p}`;
 
 export const handlers = [
-   rest.get(url("/articles"), (req, res, ctx) => {
+   rest.get(url("/articles"), (_req, res, ctx) => {
       const payload: ArticleQueryDTO[] = [];
 
       for (const dbArticle of db.articles.getAll()) {
@@ -23,15 +23,41 @@ export const handlers = [
          });
       }
 
-      const queryParamNew = req.url.searchParams.get("new");
+      return res(ctx.json(payload));
+   }),
+   rest.get(url("/articles/derived/new"), (_req, res, ctx) => {
+      const payload: ArticleQueryDTO[] = [];
 
-      if (!queryParamNew) {
-         return res(ctx.json(payload));
+      for (const dbArticle of db.articles.getAll()) {
+         payload.push({
+            _id: dbArticle._id,
+            title: dbArticle.title,
+            description: dbArticle.description,
+            content: dbArticle.content,
+            author: dbArticle.author,
+            date: dbArticle.created_at,
+            archiveDate: dbArticle.archiveDate as unknown as Date
+         });
       }
 
-      return queryParamNew === "true"
-         ? res(ctx.json(payload.filter((k) => !k.archiveDate)))
-         : res(ctx.json(payload.filter((k) => !!k.archiveDate)));
+      res(ctx.json(payload.filter((k) => !k.archiveDate)));
+   }),
+   rest.get(url("/articles/derived/archive"), (_req, res, ctx) => {
+      const payload: ArticleQueryDTO[] = [];
+
+      for (const dbArticle of db.articles.getAll()) {
+         payload.push({
+            _id: dbArticle._id,
+            title: dbArticle.title,
+            description: dbArticle.description,
+            content: dbArticle.content,
+            author: dbArticle.author,
+            date: dbArticle.created_at,
+            archiveDate: dbArticle.archiveDate as unknown as Date
+         });
+      }
+
+      res(ctx.json(payload.filter((k) => !!k.archiveDate)));
    }),
    rest.get(url("/articles/:id"), (req, res, ctx) => {
       const selectedArticle = db.articles.findFirst({
