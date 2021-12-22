@@ -20,16 +20,13 @@ export default {
       ["list"]
    ],
    use: {
-      baseURL: process.env.PLAYWRIGHT_BASE_URL || "http://localhost:3000",
+      baseURL: process.env.PLAYWRIGHT_BASE_URL || "http://localhost:4002",
       trace: "retry-with-trace"
    },
    webServer: {
       command: "pnpm dev --filter backend-services-articles-command",
-      port: 3000,
+      port: 4002,
       timeout: 30 * 1000,
-      reuseExistingServer: true,
-      env: {
-         PORT: 3000 as unknown
-      }
+      reuseExistingServer: true
    }
 } as PlaywrightTestConfig;

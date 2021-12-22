@@ -25,11 +25,11 @@ export default {
    },
    webServer: {
       command: "pnpm dev --filter backend-gateway",
-      port: 3000,
+      port: 4000,
       timeout: 30 * 1000,
       reuseExistingServer: true,
       env: {
-         PORT: 3000 as unknown
+         PORT: 4000 as unknown
       }
    }
 } as PlaywrightTestConfig;

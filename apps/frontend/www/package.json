@@ -13,9 +13,6 @@
       "storybook:build": "build-storybook -s public",
       "prepare": "msw init public"
    },
-   "resolutions": {
-      "preact": "10.6.2"
-   },
    "msw": {
       "workerDirectory": "public"
    },
@@ -26,7 +23,6 @@
       "@radix-ui/react-tooltip": "0.1.6",
       "@stitches/react": "1.2.6",
       "next": "12.0.7",
-      "preact": "10.6.4",
       "react": "17.0.2",
       "react-dom": "17.0.2",
       "react-hot-toast": "2.1.1",

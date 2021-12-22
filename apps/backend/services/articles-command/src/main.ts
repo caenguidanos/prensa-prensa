@@ -9,7 +9,7 @@ if (isExecuted) {
    if (process.env.NODE_ENV === "test") {
       const app = await createApp();
 
-      const PORT = process.env.PORT || 3000;
+      const PORT = process.env.PORT || 4002;
 
       app.listen(PORT, async () => {
          console.log(`Listening :${PORT}`);
@@ -28,7 +28,7 @@ if (isExecuted) {
 
       const app = await createApp();
 
-      const PORT = process.env.PORT || 3000;
+      const PORT = process.env.PORT || 4002;
 
       const server = app.listen(PORT, async () => {
          console.log(`Listening :${PORT}`);
@@ -42,7 +42,7 @@ if (isExecuted) {
    if (process.env.NODE_ENV === "production") {
       const app = await createApp();
 
-      const PORT = process.env.PORT || 3000;
+      const PORT = process.env.PORT || 4002;
 
       app.listen(PORT, async () => {
          console.log(`Listening :${PORT}`);
