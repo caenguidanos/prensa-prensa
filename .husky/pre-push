@@ -12,5 +12,5 @@ else
    # fi
 
    pnpm all:build
-   pnpm all:e2e
+   # pnpm all:e2e
 fi
