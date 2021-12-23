@@ -5,6 +5,12 @@ import { createApp } from "./app/server";
 async function bootstrap(): Promise<void> {
    const PORT = process.env.PORT || 4001;
 
+   if (process.env.NODE_ENV === "test") {
+      const app = await createApp();
+
+      app.listen(PORT);
+   }
+
    if (process.env.NODE_ENV === "development") {
       const dotenv = await import("dotenv");
       dotenv.config();

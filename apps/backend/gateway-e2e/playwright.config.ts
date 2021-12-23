@@ -24,12 +24,9 @@ export default {
       trace: "retry-with-trace"
    },
    webServer: {
-      command: "pnpm dev --filter backend-gateway",
+      command: 'NODE_ENV="test" pnpm dev --filter "backend-*" --parallel',
       port: 4000,
       timeout: 30 * 1000,
-      reuseExistingServer: true,
-      env: {
-         PORT: 4000 as unknown
-      }
+      reuseExistingServer: true
    }
 } as PlaywrightTestConfig;
