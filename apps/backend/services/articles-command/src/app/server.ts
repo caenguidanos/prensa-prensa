@@ -1,7 +1,6 @@
 import express, { Express } from "express";
 import helmet from "helmet";
 import cors from "cors";
-import compression from "compression";
 import morgan from "morgan";
 
 import { connectClient } from "@workspace/domain-articles-driver";
@@ -15,9 +14,10 @@ export async function createApp(): Promise<Express> {
 
       server.use(helmet());
       server.use(cors());
-      server.use(compression());
       server.use(morgan("tiny"));
+
       server.use(express.json());
+      server.use(express.text());
 
       server.use(
          "/v1",

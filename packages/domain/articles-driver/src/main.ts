@@ -54,7 +54,11 @@ export async function connectClient(): Promise<typeof import("mongoose")> {
       throw new Error("Invalid URI for MongoDB connection.");
    }
 
-   return connect(uri, { dbName: "prensa" });
+   const client = await connect(uri, {
+      dbName: "prensa"
+   });
+
+   return client;
 }
 
 export async function dropClientDatabase(): Promise<void> {

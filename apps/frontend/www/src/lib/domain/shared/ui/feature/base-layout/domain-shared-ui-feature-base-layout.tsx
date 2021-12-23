@@ -3,10 +3,7 @@ import { styled } from "$stitches";
 import { DomainSharedUiAppBar } from "../app-bar/domain-shared-ui-feature-app-bar";
 
 const DomainSharedUiBaseLayoutPrimitive = styled("div", {
-   height: "100%",
    minHeight: "100vh",
-   width: "100%",
-   minWidth: "100%",
    backgroundColor: "$amber100"
 });
 
@@ -14,7 +11,6 @@ const DomainSharedUiBaseLayoutContentPrimitive = styled("main", {
    display: "flex",
    justifyContent: "center",
    alignItems: "start",
-   maxWidth: "100rem",
    padding: "$2",
    "@sm": {
       py: "$8",

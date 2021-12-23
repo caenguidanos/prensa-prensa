@@ -13,8 +13,6 @@ controller.post("/", async (req, res) => {
             ? (JSON.parse(req.body) as ArticleCommandCreateDTO)
             : (req.body as ArticleCommandCreateDTO);
 
-      console.log(body);
-
       const dto = await service.createArticleService(body);
 
       res.json(dto).end();
