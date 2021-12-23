@@ -27,3 +27,7 @@ docker-compose up
 ```
 
 > Go to `:3000`
+
+### Navigator
+
+Recommended: `chrome >95`

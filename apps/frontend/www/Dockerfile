@@ -9,4 +9,4 @@ RUN pnpm build --filter frontend-www
 ENV NODE_ENV production
 ENV PORT 3000
 EXPOSE 3000
-CMD ["pnpm", "start --filter frontend-www"]
+CMD ["pnpm", "start", "--filter", "frontend-www"]

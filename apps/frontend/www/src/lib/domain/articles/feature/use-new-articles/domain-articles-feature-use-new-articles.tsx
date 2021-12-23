@@ -77,8 +77,6 @@ export function useNewArticles() {
             className: ToastSuccess(),
             icon: <CheckIcon />
          });
-
-         appBarStateActions.incrementArchivedCount();
       } catch (error) {
          console.error(error);
          abortController.abort();

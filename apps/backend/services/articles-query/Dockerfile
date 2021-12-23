@@ -9,4 +9,4 @@ RUN pnpm build --filter backend-services-articles-query
 ENV NODE_ENV production
 ENV PORT 4001
 EXPOSE 4001
-CMD ["pnpm", "start --filter backend-services-articles-query"]
+CMD ["pnpm", "start", "--filter", "backend-services-articles-query"]
