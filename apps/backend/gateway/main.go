@@ -1,18 +1,11 @@
 package main
 
 import (
-	"os"
-	"time"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/proxy"
 )
 
 func main() {
-	nodeEnv := os.Getenv("NODE_ENV")
-	if nodeEnv == "test" {
-		time.Sleep(3 * time.Second)
-	}
 
 	app := fiber.New()
 
@@ -25,4 +18,5 @@ func main() {
 	}))
 
 	app.Listen(":4000")
+
 }
