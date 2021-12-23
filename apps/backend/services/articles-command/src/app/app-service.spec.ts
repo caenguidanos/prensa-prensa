@@ -1,113 +1,57 @@
-import { schemaDriver } from "./app-model";
+import faker from "faker";
 
+import type { ArticleCommandCreateDTO, ArticleCommandUpdateDTO } from "@workspace/domain-articles";
+
+import { schemaDriver } from "./app-model";
 import {
-   getArticlesService,
-   getArticlesDerivedNewService,
-   getArticlesDerivedArchiveService,
-   getArticleByIDService
+   createArticleService,
+   removeArticleByIDService,
+   updateArticleByIDService
 } from "./app-service";
 
 describe("service", () => {
-   let sharedID: string | undefined;
+   let id: string | undefined;
 
-   const articleClientFields = [
-      "_id",
-      "title",
-      "description",
-      "content",
-      "author",
-      "archiveDate",
-      "date"
-   ];
+   it("should create an article", async () => {
+      const previous = await schemaDriver.find({});
+      expect(previous.length).toBe(10);
 
-   it("should get all articles", async () => {
-      const result = await getArticlesService();
+      const dto: ArticleCommandCreateDTO = {
+         title: faker.name.title(),
+         description: faker.commerce.productDescription(),
+         content: faker.name.jobDescriptor(),
+         author: faker.name.firstName(),
+         archiveDate: null
+      };
 
-      expect(result.length).toBe(10);
+      const result = await createArticleService(dto);
+      expect(result).toBeTruthy();
 
-      for (const r of result) {
-         expect(Object.keys(r)).toStrictEqual(articleClientFields);
-
-         expect(r._id).toBeTruthy();
-         expect(r.title).toBeTruthy();
-         expect(r.description).toBeTruthy();
-         expect(r.content).toBeTruthy();
-         expect(r.author).toBeTruthy();
-         expect(r.date).toBeTruthy();
-         expect(r.archiveDate).toBeNull();
-      }
+      id = result._id;
    });
 
-   it("should get all archived articles", async () => {
-      const preUpdateData = await getArticlesService();
-
-      const [a, b, c] = preUpdateData;
-
-      await schemaDriver.findByIdAndUpdate(a._id, {
-         archiveDate: new Date()
-      });
-      await schemaDriver.findByIdAndUpdate(b._id, {
-         archiveDate: new Date()
-      });
-      await schemaDriver.findByIdAndUpdate(c._id, {
-         archiveDate: new Date()
-      });
-
-      sharedID = a._id;
-
-      const result = await getArticlesDerivedArchiveService();
-
-      expect(result.length).toBe(3);
-
-      for (const r of result) {
-         expect(Object.keys(r)).toStrictEqual(articleClientFields);
-
-         expect(r._id).toBeTruthy();
-         expect(r.title).toBeTruthy();
-         expect(r.description).toBeTruthy();
-         expect(r.content).toBeTruthy();
-         expect(r.author).toBeTruthy();
-         expect(r.date).toBeTruthy();
-         expect(r.archiveDate).toBeTruthy();
-      }
-   });
-
-   it("should get all new articles", async () => {
-      const result = await getArticlesDerivedNewService();
-
-      expect(result.length).toBe(7);
-
-      for (const r of result) {
-         expect(Object.keys(r)).toStrictEqual(articleClientFields);
-
-         expect(r._id).toBeTruthy();
-         expect(r.title).toBeTruthy();
-         expect(r.description).toBeTruthy();
-         expect(r.content).toBeTruthy();
-         expect(r.author).toBeTruthy();
-         expect(r.date).toBeTruthy();
-         expect(r.archiveDate).toBeNull();
-      }
-   });
-
-   it("should get article by id", async () => {
-      if (!sharedID) {
+   it("should update an article", async () => {
+      if (!id) {
          throw new Error("Invalid ID");
       }
 
-      const r = await getArticleByIDService(sharedID);
+      const dto: ArticleCommandUpdateDTO = {
+         archiveDate: faker.date.recent().toString()
+      };
 
-      expect(r._id).toBeTruthy();
-      expect(r.title).toBeTruthy();
-      expect(r.description).toBeTruthy();
-      expect(r.content).toBeTruthy();
-      expect(r.author).toBeTruthy();
-      expect(r.date).toBeTruthy();
+      const result = await updateArticleByIDService(id, dto);
+      expect(result).toBeTruthy();
    });
 
-   it("should not get article by invalid id", async () => {
-      const r = await getArticleByIDService("1234");
+   it("should remove an article", async () => {
+      if (!id) {
+         throw new Error("Invalid ID");
+      }
 
-      expect(r).toBeNull();
+      const result = await removeArticleByIDService(id);
+      expect(result).toBeTruthy();
+
+      const future = await schemaDriver.findById(id);
+      expect(future).toBeFalsy();
    });
 });

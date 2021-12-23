@@ -1,10 +1,25 @@
 import mongoose from "mongoose";
 
-import { ArticleQueryDTO, ArticleSchema, composeArticleQueryDTO } from "@workspace/domain-articles";
+import {
+   ArticleCommandCreateDTO,
+   ArticleCommandUpdateDTO,
+   ArticleQueryDTO,
+   ArticleSchema,
+   composeArticleQueryDTO
+} from "@workspace/domain-articles";
 
 import { schemaDriver } from "./app-model";
 
-export async function getArticleByIDService(_id: string): Promise<ArticleQueryDTO | null> {
+export async function createArticleService(dto: ArticleCommandCreateDTO): Promise<ArticleQueryDTO> {
+   const doc = new schemaDriver(dto);
+   const saved = await doc.save();
+   return composeArticleQueryDTO(saved as unknown as ArticleSchema);
+}
+
+export async function updateArticleByIDService(
+   _id: string,
+   dto: ArticleCommandUpdateDTO
+): Promise<ArticleQueryDTO | null> {
    if (!mongoose.isValidObjectId(_id)) {
       return null;
    }
@@ -12,24 +27,24 @@ export async function getArticleByIDService(_id: string): Promise<ArticleQueryDT
    const existsDoc = await schemaDriver.exists({ _id });
 
    if (existsDoc) {
-      const data = await schemaDriver.findById(_id);
-      return composeArticleQueryDTO(data as unknown as ArticleSchema);
+      const doc = await schemaDriver.findByIdAndUpdate(_id, dto, { new: true });
+      return composeArticleQueryDTO(doc as unknown as ArticleSchema);
    }
 
    return null;
 }
 
-export async function getArticlesService(): Promise<ArticleQueryDTO[]> {
-   const data = await schemaDriver.find({});
-   return data.map((k) => composeArticleQueryDTO(k as unknown as ArticleSchema));
-}
+export async function removeArticleByIDService(_id: string): Promise<ArticleQueryDTO | null> {
+   if (!mongoose.isValidObjectId(_id)) {
+      return null;
+   }
 
-export async function getArticlesDerivedArchiveService(): Promise<ArticleQueryDTO[]> {
-   const data = await schemaDriver.find({ archiveDate: { $ne: null } });
-   return data.map((k) => composeArticleQueryDTO(k as unknown as ArticleSchema));
-}
+   const existsDoc = await schemaDriver.exists({ _id });
 
-export async function getArticlesDerivedNewService(): Promise<ArticleQueryDTO[]> {
-   const data = await schemaDriver.find({ archiveDate: { $eq: null } });
-   return data.map((k) => composeArticleQueryDTO(k as unknown as ArticleSchema));
+   if (existsDoc) {
+      const doc = await schemaDriver.findByIdAndRemove(_id);
+      return composeArticleQueryDTO(doc as unknown as ArticleSchema);
+   }
+
+   return null;
 }

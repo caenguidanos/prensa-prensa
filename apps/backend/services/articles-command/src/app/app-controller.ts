@@ -1,12 +1,21 @@
 import express from "express";
 
+import type { ArticleCommandCreateDTO, ArticleCommandUpdateDTO } from "@workspace/domain-articles";
+
 import * as service from "./app-service";
 
 const controller = express.Router();
 
-controller.get("/", async (_req, res) => {
+controller.post("/", async (req, res) => {
    try {
-      const dto = await service.getArticlesService();
+      const body =
+         typeof req.body === "string"
+            ? (JSON.parse(req.body) as ArticleCommandCreateDTO)
+            : (req.body as ArticleCommandCreateDTO);
+
+      console.log(body);
+
+      const dto = await service.createArticleService(body);
 
       res.json(dto).end();
    } catch (error) {
@@ -24,9 +33,14 @@ controller.get("/healthz", (_req, res) => {
    }
 });
 
-controller.get("/:id", async (req, res) => {
+controller.patch("/:id", async (req, res) => {
    try {
-      const dto = await service.getArticleByIDService(req.params.id);
+      const body =
+         typeof req.body === "string"
+            ? (JSON.parse(req.body) as ArticleCommandUpdateDTO)
+            : (req.body as ArticleCommandUpdateDTO);
+
+      const dto = await service.updateArticleByIDService(req.params.id, body);
 
       if (dto) {
          return res.json(dto).end();
@@ -39,31 +53,15 @@ controller.get("/:id", async (req, res) => {
    }
 });
 
-controller.get("/derived/:type", async (req, res) => {
+controller.delete("/:id", async (req, res) => {
    try {
-      const derivedType = req.params.type;
+      const dto = await service.removeArticleByIDService(req.params.id);
 
-      const validDerivedTypes = ["new", "archive"];
-
-      if (!derivedType) {
-         res.status(400).send("Bad Request").end();
+      if (dto) {
+         return res.json(dto).end();
       }
 
-      if (!validDerivedTypes.includes(derivedType)) {
-         res.status(400).send("Bad Request").end();
-      }
-
-      if (derivedType === "new") {
-         const dto = await service.getArticlesDerivedNewService();
-
-         res.json(dto).end();
-      }
-
-      if (derivedType === "archive") {
-         const dto = await service.getArticlesDerivedArchiveService();
-
-         res.json(dto).end();
-      }
+      return res.status(404).send("Not Found").end();
    } catch (error) {
       console.log(error);
       res.status(500).send("Internal Server Error");

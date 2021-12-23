@@ -2,53 +2,31 @@ import process from "process";
 
 import { createApp } from "./app/server";
 
-const isExecuted: boolean = require.main == module;
+async function bootstrap(): Promise<void> {
+   const PORT = process.env.PORT || 4002;
 
-async function bootstrap() {
-   if (isExecuted) {
-      if (process.env.NODE_ENV === "test") {
-         const app = await createApp();
+   if (process.env.NODE_ENV === "development") {
+      const dotenv = await import("dotenv");
+      dotenv.config();
 
-         const PORT = process.env.PORT || 4002;
+      const { mongodbMemoryServer } = await import("./mock/mongodb/server.mock");
+      const mongodbMemoryServerInstance = await mongodbMemoryServer();
+      await mongodbMemoryServerInstance.setup();
 
-         app.listen(PORT, async () => {
-            console.log(`Listening :${PORT}`);
-         });
-      }
+      const app = await createApp();
 
-      if (process.env.NODE_ENV === "development") {
-         const dotenv = await import("dotenv");
+      app.listen(PORT).on("close", async () => {
+         await mongodbMemoryServerInstance.teardown();
+      });
+   }
 
-         dotenv.config();
+   if (process.env.NODE_ENV === "production") {
+      const app = await createApp();
 
-         const { default: mongodbSetup } = await import("./mock/mongodb/app/global-setup");
-         const { default: mongodbTeardown } = await import("./mock/mongodb/app/global-teardown");
-
-         await mongodbSetup();
-
-         const app = await createApp();
-
-         const PORT = process.env.PORT || 4002;
-
-         const server = app.listen(PORT, async () => {
-            console.log(`Listening :${PORT}`);
-         });
-
-         server.on("close", async () => {
-            await mongodbTeardown();
-         });
-      }
-
-      if (process.env.NODE_ENV === "production") {
-         const app = await createApp();
-
-         const PORT = process.env.PORT || 4002;
-
-         app.listen(PORT, async () => {
-            console.log(`Listening :${PORT}`);
-         });
-      }
+      app.listen(PORT);
    }
 }
 
-bootstrap();
+if (require.main === module) {
+   bootstrap();
+}

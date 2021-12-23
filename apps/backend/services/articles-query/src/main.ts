@@ -2,34 +2,31 @@ import process from "process";
 
 import { createApp } from "./app/server";
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
    const PORT = process.env.PORT || 4001;
-   
+
    if (process.env.NODE_ENV === "development") {
       const dotenv = await import("dotenv");
       dotenv.config();
 
-      const { default: mongodbSetup } = await import("./mock/mongodb/app/global-setup");
-      const { default: mongodbTeardown } = await import("./mock/mongodb/app/global-teardown");
+      const { mongodbMemoryServer } = await import("./mock/mongodb/server.mock");
+      const mongodbMemoryServerInstance = await mongodbMemoryServer();
+      await mongodbMemoryServerInstance.setup();
 
-      await mongodbSetup();
+      const app = await createApp();
 
-      const app = await createApp();   
-
-      const server = app.listen(PORT, () => console.log(`Listening :${PORT}`));
-
-      server.on("close", async () => {
-         await mongodbTeardown();
+      app.listen(PORT).on("close", async () => {
+         await mongodbMemoryServerInstance.teardown();
       });
    }
-   
+
    if (process.env.NODE_ENV === "production") {
       const app = await createApp();
 
-      app.listen(PORT, () => console.log(`Listening :${PORT}`))
+      app.listen(PORT);
    }
 }
 
-if (require.main == module) {
+if (require.main === module) {
    bootstrap();
 }

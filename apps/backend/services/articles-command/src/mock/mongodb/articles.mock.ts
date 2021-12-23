@@ -3,7 +3,7 @@ import { factory, nullable, primaryKey } from "@mswjs/data";
 
 import type { Article } from "@workspace/domain-articles";
 
-const db = factory({
+export const db = factory({
    articles: {
       title: faker.commerce.productName,
       description: faker.commerce.productDescription,
