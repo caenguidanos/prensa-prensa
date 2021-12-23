@@ -2,53 +2,34 @@ import process from "process";
 
 import { createApp } from "./app/server";
 
-const isExecuted: boolean = require.main == module;
-
 async function bootstrap() {
-   if (isExecuted) {
-      if (process.env.NODE_ENV === "test") {
-         const app = await createApp();
+   const PORT = process.env.PORT || 4001;
+   
+   if (process.env.NODE_ENV === "development") {
+      const dotenv = await import("dotenv");
+      dotenv.config();
 
-         const PORT = process.env.PORT || 4001;
+      const { default: mongodbSetup } = await import("./mock/mongodb/app/global-setup");
+      const { default: mongodbTeardown } = await import("./mock/mongodb/app/global-teardown");
 
-         app.listen(PORT, async () => {
-            console.log(`Listening :${PORT}`);
-         });
-      }
+      await mongodbSetup();
 
-      if (process.env.NODE_ENV === "development") {
-         const dotenv = await import("dotenv");
+      const app = await createApp();   
 
-         dotenv.config();
+      const server = app.listen(PORT, () => console.log(`Listening :${PORT}`));
 
-         const { default: mongodbSetup } = await import("./mock/mongodb/app/global-setup");
-         const { default: mongodbTeardown } = await import("./mock/mongodb/app/global-teardown");
+      server.on("close", async () => {
+         await mongodbTeardown();
+      });
+   }
+   
+   if (process.env.NODE_ENV === "production") {
+      const app = await createApp();
 
-         await mongodbSetup();
-
-         const app = await createApp();
-
-         const PORT = process.env.PORT || 4001;
-
-         const server = app.listen(PORT, async () => {
-            console.log(`Listening :${PORT}`);
-         });
-
-         server.on("close", async () => {
-            await mongodbTeardown();
-         });
-      }
-
-      if (process.env.NODE_ENV === "production") {
-         const app = await createApp();
-
-         const PORT = process.env.PORT || 4001;
-
-         app.listen(PORT, async () => {
-            console.log(`Listening :${PORT}`);
-         });
-      }
+      app.listen(PORT, () => console.log(`Listening :${PORT}`))
    }
 }
 
-bootstrap();
+if (require.main == module) {
+   bootstrap();
+}
