@@ -8,7 +8,7 @@
       "format": "go fmt ./...",
       "test": "go test -coverprofile coverage.profile ./...",
       "test:report": "go tool cover -html=coverage.profile",
-      "prepare": "go mod tidy"
+      "prepare": "go mod download"
    },
    "dependencies": {
       "nodemon": "2.0.15"

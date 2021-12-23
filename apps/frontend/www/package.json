@@ -17,7 +17,7 @@
       "workerDirectory": "public"
    },
    "dependencies": {
-      "@workspace/domain-articles": "workspace:*",
+      "@workspace/domain-articles": "workspace:1.0.0",
       "@radix-ui/react-dropdown-menu": "0.1.4",
       "@radix-ui/react-icons": "1.0.3",
       "@radix-ui/react-popover": "0.1.4",

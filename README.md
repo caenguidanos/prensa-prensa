@@ -16,28 +16,14 @@
 pnpm install
 ```
 
+## Initialization
+
 ```bash
-docker pull mongo
+docker-compose build
 ```
 
-## Packages
-
-```
-pnpm packages:build
-pnpm packages:lint
-pnpm packages:test
-pnpm packages:format
+```bash
+docker-compose up
 ```
 
-## Apps
-
-> `start` doesn't works if you not provides custom environment **variables** in script
-
-```
-pnpm apps:dev
-pnpm apps:lint
-pnpm apps:test
-pnpm apps:build
-pnpm apps:start
-pnpm apps:e2e
-```
+> Go to `:3000`
