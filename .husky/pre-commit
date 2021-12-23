@@ -14,6 +14,7 @@ else
    pnpm packages:lint
    pnpm packages:test
    pnpm packages:format
+   pnpm packages:build
 
    pnpm apps:lint
    pnpm apps:test

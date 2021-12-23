@@ -8,11 +8,16 @@
 -  golang: `+1.17`
 -  nvm
 -  pnpm
+-  docker
 
 ## Installation
 
 ```bash
 pnpm install
+```
+
+```bash
+docker pull mongo
 ```
 
 ## Packages

@@ -1,13 +1,10 @@
 import toast from "react-hot-toast";
 import { CheckIcon, Cross2Icon } from "@radix-ui/react-icons";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { css } from "$stitches";
 
-import {
-   commandDeleteArticleByID,
-   queryArticlesOnlyArchived
-} from "../../data-access/domain-articles-data-access";
+import * as repository from "../../data-access/domain-articles-data-access";
 
 import type { ArticleQueryDTO } from "@workspace/domain-articles";
 
@@ -37,26 +34,26 @@ export function useArchivedArticles() {
       shadow: "sm"
    });
 
-   const queryRefreshArticles = useCallback(async () => {
+   const queryRefreshArticles = async () => {
       const abortController = new AbortController();
 
       try {
-         const data = await queryArticlesOnlyArchived(abortController.signal);
+         const data = await repository.queryArticlesOnlyArchived(abortController.signal);
 
          setData(data);
       } catch (error) {
          console.error(error);
          abortController.abort();
       }
-   }, [setData]);
+   };
 
-   const commandRemoveArticleByID = useCallback(async (id: string) => {
+   const commandRemoveArticleByID = async (id: string) => {
       const abortController = new AbortController();
 
       setLoading(true);
 
       try {
-         await commandDeleteArticleByID(id, abortController.signal);
+         await repository.commandDeleteArticleByID(id, abortController.signal);
 
          toast.success("Successfully deleted!", {
             style: null,
@@ -77,7 +74,7 @@ export function useArchivedArticles() {
       }
 
       setLoading(false);
-   }, []);
+   };
 
    useEffect(function fetchArticlesOnInit() {
       queryRefreshArticles();

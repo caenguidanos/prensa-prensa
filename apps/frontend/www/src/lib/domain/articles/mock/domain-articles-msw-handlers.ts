@@ -5,7 +5,7 @@ import { db } from "./domain-articles-msw-data";
 
 import type { ArticleQueryDTO } from "@workspace/domain-articles";
 
-const url = (p: string) => `http://localhost:3000/articles${p}`;
+const url = (p: string): string => `http://localhost:4000/v1/articles${p}`;
 
 export const handlers = [
    rest.get(url("/"), (_req, res, ctx) => {

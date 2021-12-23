@@ -7,8 +7,6 @@ import {
    useNewArticles
 } from "$lib/domain/articles";
 
-import { createDocument } from "$lib/domain/articles/mock/domain-articles-msw-data";
-
 import { ViewPagesIndexUiHeader, ViewPagesIndexUiPrincipal } from "../ui";
 
 import type { PageWithLayout } from "$lib/domain/shared/layout";
@@ -28,7 +26,8 @@ const ViewPagesIndexArticles = styled("div", {
 });
 
 export const ViewPagesIndex: PageWithLayout<ViewPagesIndexProps> = () => {
-   const { data, loading, commandArchiveArticleByID, queryRefreshArticles } = useNewArticles();
+   const { data, loading, commandArchiveArticleByID, commandCreateRandomArticle } =
+      useNewArticles();
 
    const onCardClick = (id: string) => {
       return async () => {
@@ -37,12 +36,7 @@ export const ViewPagesIndex: PageWithLayout<ViewPagesIndexProps> = () => {
    };
 
    const onButtonClick = async () => {
-      try {
-         createDocument();
-         await queryRefreshArticles();
-      } catch (error) {
-         console.error(error);
-      }
+      await commandCreateRandomArticle();
    };
 
    return (

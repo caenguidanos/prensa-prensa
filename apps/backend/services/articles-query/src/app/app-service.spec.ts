@@ -1,4 +1,4 @@
-import { schemaDriver } from "./app-model";
+import { schemaDriver } from "@workspace/domain-articles-driver";
 
 import {
    getArticlesService,
@@ -43,13 +43,13 @@ describe("service", () => {
 
       const [a, b, c] = preUpdateData;
 
-      await schemaDriver.findByIdAndUpdate(a._id, {
+      await schemaDriver().findByIdAndUpdate(a._id, {
          archiveDate: new Date()
       });
-      await schemaDriver.findByIdAndUpdate(b._id, {
+      await schemaDriver().findByIdAndUpdate(b._id, {
          archiveDate: new Date()
       });
-      await schemaDriver.findByIdAndUpdate(c._id, {
+      await schemaDriver().findByIdAndUpdate(c._id, {
          archiveDate: new Date()
       });
 

@@ -1,19 +1,20 @@
 import faker from "faker";
 
-import type { ArticleCommandCreateDTO, ArticleCommandUpdateDTO } from "@workspace/domain-articles";
+import { schemaDriver } from "@workspace/domain-articles-driver";
 
-import { schemaDriver } from "./app-model";
 import {
    createArticleService,
    removeArticleByIDService,
    updateArticleByIDService
 } from "./app-service";
 
+import type { ArticleCommandCreateDTO, ArticleCommandUpdateDTO } from "@workspace/domain-articles";
+
 describe("service", () => {
    let id: string | undefined;
 
    it("should create an article", async () => {
-      const previous = await schemaDriver.find({});
+      const previous = await schemaDriver().find({});
       expect(previous.length).toBe(10);
 
       const dto: ArticleCommandCreateDTO = {
@@ -51,7 +52,7 @@ describe("service", () => {
       const result = await removeArticleByIDService(id);
       expect(result).toBeTruthy();
 
-      const future = await schemaDriver.findById(id);
+      const future = await schemaDriver().findById(id);
       expect(future).toBeFalsy();
    });
 });

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import esbuild from "esbuild";
 
 const makeAllPackagesExternalPlugin = {
@@ -12,19 +13,17 @@ const makeAllPackagesExternalPlugin = {
    }
 };
 
-const isProduction = process.env.NODE_ENV === "production";
-
 const { metafile } = await esbuild.build({
    entryPoints: ["src/main.ts"],
-   outfile: "dist/main.js",
-   format: "cjs",
+   outfile: "dist/esm/main.js",
+   format: "esm",
    platform: "node",
    target: "esnext",
    metafile: true,
    treeShaking: true,
    bundle: true,
    plugins: [makeAllPackagesExternalPlugin],
-   minify: isProduction,
+   minify: true,
    sourcemap: true
 });
 

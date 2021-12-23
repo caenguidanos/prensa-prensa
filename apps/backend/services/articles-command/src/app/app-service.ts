@@ -1,5 +1,3 @@
-import mongoose from "mongoose";
-
 import {
    ArticleCommandCreateDTO,
    ArticleCommandUpdateDTO,
@@ -8,10 +6,11 @@ import {
    composeArticleQueryDTO
 } from "@workspace/domain-articles";
 
-import { schemaDriver } from "./app-model";
+import { schemaDriver, isValidMongooseObjectId } from "@workspace/domain-articles-driver";
 
 export async function createArticleService(dto: ArticleCommandCreateDTO): Promise<ArticleQueryDTO> {
-   const doc = new schemaDriver(dto);
+   const Model = schemaDriver();
+   const doc = new Model(dto);
    const saved = await doc.save();
    return composeArticleQueryDTO(saved as unknown as ArticleSchema);
 }
@@ -20,14 +19,14 @@ export async function updateArticleByIDService(
    _id: string,
    dto: ArticleCommandUpdateDTO
 ): Promise<ArticleQueryDTO | null> {
-   if (!mongoose.isValidObjectId(_id)) {
+   if (!isValidMongooseObjectId(_id)) {
       return null;
    }
 
-   const existsDoc = await schemaDriver.exists({ _id });
+   const existsDoc = await schemaDriver().exists({ _id });
 
    if (existsDoc) {
-      const doc = await schemaDriver.findByIdAndUpdate(_id, dto, { new: true });
+      const doc = await schemaDriver().findByIdAndUpdate(_id, dto, { new: true });
       return composeArticleQueryDTO(doc as unknown as ArticleSchema);
    }
 
@@ -35,14 +34,14 @@ export async function updateArticleByIDService(
 }
 
 export async function removeArticleByIDService(_id: string): Promise<ArticleQueryDTO | null> {
-   if (!mongoose.isValidObjectId(_id)) {
+   if (!isValidMongooseObjectId(_id)) {
       return null;
    }
 
-   const existsDoc = await schemaDriver.exists({ _id });
+   const existsDoc = await schemaDriver().exists({ _id });
 
    if (existsDoc) {
-      const doc = await schemaDriver.findByIdAndRemove(_id);
+      const doc = await schemaDriver().findByIdAndRemove(_id);
       return composeArticleQueryDTO(doc as unknown as ArticleSchema);
    }
 

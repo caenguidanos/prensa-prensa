@@ -6,8 +6,7 @@ import type {
 
 const authorization = "Bearer 1234...";
 
-const url = (p: string): string =>
-   `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"}/articles${p}`;
+const url = (p: string): string => `${process.env.NEXT_PUBLIC_API_URL}/v1/articles${p}`;
 
 export async function queryArticles(signal: AbortSignal): Promise<ArticleQueryDTO[]> {
    const response = await fetch(url("/"), { signal });

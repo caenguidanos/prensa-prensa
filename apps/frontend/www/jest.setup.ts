@@ -9,9 +9,15 @@ export function injectFetch(): void {
    globalThis.fetch = fetch as unknown as typeof globalThis.fetch;
 }
 
+export function injectEnvironment(): void {
+   process.env.NEXT_PUBLIC_API_URL = "http://localhost:4000";
+}
+
 beforeAll(() => {
    createDb();
+
    injectFetch();
+   injectEnvironment();
 
    server.listen();
 });

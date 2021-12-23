@@ -4,10 +4,10 @@ import cors from "cors";
 import compression from "compression";
 import morgan from "morgan";
 
+import { connectClient } from "@workspace/domain-articles-driver";
+
 import { controller } from "./app-controller";
 import { backendSign, methods } from "./app-middleware";
-
-import * as mongodbConfig from "./config/mongo-db.config";
 
 export async function createApp(): Promise<Express> {
    try {
@@ -20,7 +20,7 @@ export async function createApp(): Promise<Express> {
 
       server.use("/v1", methods(["GET"]), backendSign("services-articles-query"), controller);
 
-      await mongodbConfig.connectClient();
+      await connectClient();
 
       return server;
    } catch (error) {

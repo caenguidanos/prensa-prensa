@@ -1,16 +1,14 @@
 import toast from "react-hot-toast";
 import { CheckIcon, Cross2Icon } from "@radix-ui/react-icons";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import faker from "faker";
 
 import { css } from "$stitches";
 import { useAppBar } from "$lib/domain/shared/ui";
 
-import {
-   commandUpdateArticleByID,
-   queryArticlesOnlyNew
-} from "../../data-access/domain-articles-data-access";
+import * as repository from "../../data-access/domain-articles-data-access";
 
-import type { ArticleQueryDTO } from "@workspace/domain-articles";
+import type { ArticleCommandCreateDTO, ArticleQueryDTO } from "@workspace/domain-articles";
 
 export function useNewArticles() {
    const [, appBarStateActions] = useAppBar();
@@ -40,62 +38,106 @@ export function useNewArticles() {
       shadow: "sm"
    });
 
-   const queryRefreshArticles = useCallback(async () => {
+   const queryRefreshArticles = async () => {
       const abortController = new AbortController();
 
       try {
-         const data = await queryArticlesOnlyNew(abortController.signal);
+         const data = await repository.queryArticlesOnlyNew(abortController.signal);
 
          setData(data);
       } catch (error) {
          console.error(error);
          abortController.abort();
       }
-   }, [setData]);
+   };
 
-   const commandArchiveArticleByID = useCallback(
-      async (id: string) => {
-         const abortController = new AbortController();
+   const commandCreateRandomArticle = async () => {
+      const abortController = new AbortController();
 
-         setLoading(true);
+      setLoading(true);
 
-         try {
-            await commandUpdateArticleByID(
-               id,
-               {
-                  archiveDate: new Intl.DateTimeFormat("es-ES").format(new Date())
-               },
-               abortController.signal
-            );
+      const randomArticle: ArticleCommandCreateDTO = {
+         title: faker.commerce.productName(),
+         description: faker.commerce.productDescription(),
+         content: faker.name.jobDescriptor(),
+         author: faker.name.firstName(),
+         archiveDate: null
+      };
 
-            setData((prev) => prev.filter((k) => k._id !== id));
+      try {
+         const generatedArticle = await repository.commandCreateArticle(
+            randomArticle,
+            abortController.signal
+         );
 
-            toast.success("Successfully archived!", {
-               style: {},
-               className: ToastSuccess(),
-               icon: <CheckIcon />
-            });
+         setData((prev) => prev.concat(generatedArticle));
 
-            appBarStateActions.incrementArchivedCount();
-         } catch (error) {
-            console.error(error);
-            abortController.abort();
+         toast.success("Successfully generated!", {
+            style: {},
+            className: ToastSuccess(),
+            icon: <CheckIcon />
+         });
 
-            toast.error("Imposible to archive!", {
-               style: {},
-               className: ToastError(),
-               icon: <Cross2Icon />
-            });
-         }
+         appBarStateActions.incrementArchivedCount();
+      } catch (error) {
+         console.error(error);
+         abortController.abort();
 
-         setLoading(false);
-      },
-      [appBarStateActions]
-   );
+         toast.error("Imposible to generate!", {
+            style: {},
+            className: ToastError(),
+            icon: <Cross2Icon />
+         });
+      }
+
+      setLoading(false);
+   };
+
+   const commandArchiveArticleByID = async (id: string) => {
+      const abortController = new AbortController();
+
+      setLoading(true);
+
+      try {
+         await repository.commandUpdateArticleByID(
+            id,
+            {
+               archiveDate: new Intl.DateTimeFormat("es-ES").format(new Date())
+            },
+            abortController.signal
+         );
+
+         setData((prev) => prev.filter((k) => k._id !== id));
+
+         toast.success("Successfully archived!", {
+            style: {},
+            className: ToastSuccess(),
+            icon: <CheckIcon />
+         });
+
+         appBarStateActions.incrementArchivedCount();
+      } catch (error) {
+         console.error(error);
+         abortController.abort();
+
+         toast.error("Imposible to archive!", {
+            style: {},
+            className: ToastError(),
+            icon: <Cross2Icon />
+         });
+      }
+
+      setLoading(false);
+   };
 
    useEffect(function fetchArticlesOnInit() {
       queryRefreshArticles();
    }, []);
 
-   return { commandArchiveArticleByID, queryRefreshArticles, loading, data, setData };
+   return {
+      commandArchiveArticleByID,
+      commandCreateRandomArticle,
+      loading,
+      data
+   };
 }

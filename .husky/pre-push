@@ -11,8 +11,6 @@ else
    #    exit 1
    # fi
 
-   pnpm packages:build
-
    pnpm apps:build
    pnpm apps:e2e
 fi

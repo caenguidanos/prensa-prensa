@@ -1,16 +1,20 @@
-import mongoose from "mongoose";
+import {
+   schemaDriver,
+   connectClient,
+   dropClientDatabase,
+   disconnectClient,
+   MongooseConnection,
+   generateRandomCollection
+} from "@workspace/domain-articles-driver";
 
-import { createCollection } from "./src/mock/mongodb/articles.mock";
-import { schemaDriver } from "./src/app/app-model";
-
-let connection: typeof mongoose | undefined;
+let client: MongooseConnection | undefined;
 
 beforeAll(async () => {
-   connection = await mongoose.connect(process.env.MONGODB_URI, { dbName: "prensa" });
-   await schemaDriver.insertMany(createCollection(10));
+   client = await connectClient();
+   await schemaDriver().insertMany(generateRandomCollection(10));
 });
 
 afterAll(async () => {
-   await mongoose.connection.db.dropDatabase();
-   await connection.disconnect();
+   await dropClientDatabase();
+   await disconnectClient(client);
 });
