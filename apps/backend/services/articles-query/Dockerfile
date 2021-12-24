@@ -5,6 +5,7 @@ WORKDIR /workspace
 RUN npm i -g pnpm
 COPY . .
 RUN pnpm install
+RUN pnpm packages:build
 RUN pnpm build --filter backend-services-articles-query
 ENV NODE_ENV production
 ENV PORT 4001

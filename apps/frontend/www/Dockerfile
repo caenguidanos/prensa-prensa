@@ -5,6 +5,9 @@ WORKDIR /workspace
 RUN npm i -g pnpm
 COPY . .
 RUN pnpm install
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL $NEXT_PUBLIC_API_URL
+RUN pnpm packages:build
 RUN pnpm build --filter frontend-www
 ENV NODE_ENV production
 ENV PORT 3000

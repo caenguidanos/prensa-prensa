@@ -6,9 +6,10 @@ import {
    useArchivedArticles
 } from "$lib/domain/articles";
 
+import { useAppBar } from "$lib/domain/shared/ui";
+
 import type { PageWithLayout } from "$lib/domain/shared/layout";
 import type { ViewPagesArchiveProps } from "../entity/view-pages-archive-feature-page.entity";
-import { useAppBar } from "$lib/domain/shared/ui";
 
 const ViewPagesArchiveContainer = styled("div", {
    display: "grid",
